@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace ESCPOS
 {
@@ -57,6 +58,21 @@ namespace ESCPOS
         public static byte[] InitializePrinter => new byte[] { 0x1B, 0x40 };
 
         /// <summary>
+        /// ESC p m t1 t2
+        /// </summary>
+        public static byte[] OpenDrawer => new byte[] { 0x1B, 0x70, 0x00, 0x3C, 0x78 };
+
+        /// <summary>
+        /// ESC m
+        /// </summary>
+        public static byte[] PaperCut => new byte[] { 0x1B, 0x6D };
+
+        /// <summary>
+        /// ESC i
+        /// </summary>
+        public static byte[] FullPaperCut => new byte[] { 0x1B, 0x69 };
+
+        /// <summary>
         /// ESC ! n
         /// </summary>
         public static byte[] SelectPrintMode(PrintMode printMode)
@@ -79,35 +95,95 @@ namespace ESCPOS
         /// </summary>
         public static byte[] DoubleStrike(OnOff @switch)
             => new byte[] { 0x1B, 0x47, (byte)@switch };
-    }
 
-    public enum OnOff
-    {
-        Off,
-        On
-    }
-    public enum PrintMode
-    {
-        Reset = 0,
-        FontB,
-        EmphasizedOn = 8,
-        DoubleHeight = 16,
-        DoubleWidth = 32,
-        UnderlineOn = 128
-    }
+        /// <summary>
+        /// ESC M n
+        /// </summary>
+        public static byte[] SelectCharacterFont(Font font)
+            => new byte[] { 0x1B, 0x4D, (byte)font };
 
-    public enum UnderlineMode
-    {
-        Off = 0,
-        OneDotThick,
-        TwoDotsThick
-    }
+        /// <summary>
+        /// ESC R n
+        /// </summary>
+        public static byte[] SelectInternationalCharacterSet(CharSet charSet)
+            => new byte[] { 0x1B, 0x52, (byte)charSet };
 
-    public enum LineSpacing
-    {
-        Default = 2,
-        Double = 4,
-        Triple = 6
+        /// <summary>
+        /// ESC T n
+        /// </summary>
+        public static byte[] SelectPrintDirection(Direction direction)
+            => new byte[] { 0x1B, 0x54, (byte)direction };
+
+        /// <summary>
+        /// ESC V n
+        /// </summary>
+        public static byte[] Turn90Degrees(ClockwiseDirection clockwiseDirection)
+            => new byte[] { 0x1B, 0x56, (byte)clockwiseDirection };
+
+        /// <summary>
+        /// ESC a n
+        /// </summary>
+        public static byte[] SelectJustification(Justification justification)
+            => new byte[] { 0x1B, 0x61, (byte)justification };
+
+        /// <summary>
+        /// ESC t n
+        /// </summary>
+        public static byte[] SelectCodeTable(CodeTable codeTable)
+            => new byte[] { 0x1B, 0x74, (byte)codeTable };
+
+        /// <summary>
+        /// ESC { n
+        /// </summary>
+        public static byte[] UpsideDown(OnOff onOff)
+            => new byte[] { 0x1B, 0x7B, (byte)onOff };
+
+        /// <summary>
+        /// GS ! n
+        /// </summary>
+        public static byte[] SelectCharSizeHeight(CharSizeHeight charSize)
+            => new byte[] { 0x1D, 0x21, (byte)charSize };
+
+        /// <summary>
+        /// GS ! n
+        /// </summary>
+        public static byte[] SelectCharSizeWidth(CharSizeWidth charSize)
+            => new byte[] { 0x1D, 0x21, (byte)charSize };
+
+        /// <summary>
+        /// GS H n
+        /// </summary>
+        public static byte[] SelectHRIPosition(HRIPosition hriPosition)
+            => new byte[] { 0x1D, 0x21, (byte)hriPosition };
+
+        /// <summary>
+        /// GS k m n
+        /// </summary>
+        public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162)
+        {
+            var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
+            var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)barCode.Length };
+            var bar = Encoding.UTF8.GetBytes(barCode);
+            return height.Add(settings).Add(bar);
+        }
+
+        /// <summary>
+        /// GS ( k pL pH cn fn n1 n2
+        /// </summary>
+        public static byte[] PrintQRCode(string content, QRCodeModel qrCodemodel, QRCodeCorrection qrodeCorrection, QRCodeSize qrCodeSize)
+        {
+            var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodemodel, 0x00 };
+            var size = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, (byte)qrCodeSize };
+            var errorCorrection = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x45, (byte)qrodeCorrection };
+            int num = content.Length + 3;
+            int pL = num % 256;
+            int pH = num / 256;
+            var storeData = new byte[] { 0x1D, 0x28, 0x6B, (byte)pL, (byte)pH, 0x31, 0x50, 0x30 };
+            var data = Encoding.UTF8.GetBytes(content);
+            var print = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30 };
+            return model.Add(size).Add(errorCorrection).Add(storeData).Add(data).Add(print);
+        }
+
     }
 
 }
