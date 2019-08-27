@@ -13,7 +13,7 @@ All command methods will return a byte array that you should concatenate with th
 ### QRCode
 ```cs
 using static ESCPOS.Commands;
-using ESCPOS;
+using ESCPOS.Utils;
 .
 .
 .
