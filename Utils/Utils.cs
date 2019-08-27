@@ -28,7 +28,7 @@ namespace ESCPOS.Utils
             return array1;
         }
 
-        public static byte[] ToBytes(this String source)
+        public static byte[] ToBytes(this string source)
             => Encoding.UTF8.GetBytes(source);
 
         public static void Print(this byte[] data, string printerAddress)
