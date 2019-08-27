@@ -1,6 +1,8 @@
 # ESCPOS
 A ESC/POS Printer Commands Helper
 
+![](https://github.com/igorocampos/ESCPOS/blob/master/ESC_POS.png)
+
 # Installing via the NuGet Package
 ```PM> Install-Package ESCPOS -Version 1.0.0```
 
