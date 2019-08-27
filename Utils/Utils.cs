@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -27,6 +27,9 @@ namespace ESCPOS.Utils
 
             return array1;
         }
+
+        public static byte[] ToBytes(this String source)
+            => Encoding.UTF8.GetBytes(source);
 
         public static void Print(this byte[] data, string printerAddress)
         {
