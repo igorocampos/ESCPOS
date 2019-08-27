@@ -67,7 +67,8 @@ foreach (var det in cfe.infCFe.det)
     array.Add($" {i++:D3} ".ToBytes());
     while (prod.Length > 20)
     {
-        array.Add(prod.Substring(0, 20).ToBytes(), LF, "     ".ToBytes());
+        var wrap = prod.Length >= 20 ? prod.Substring(0,20) : prod;
+        array.Add(wrap).ToBytes(), LF, "     ".ToBytes());
         prod = prod.Substring(20);
     }
     array.Add(prod.PadRight(20).ToBytes(), $"{$"{det.prod.vProd:f2}".PadLeft(6)}".ToBytes(), LF);
