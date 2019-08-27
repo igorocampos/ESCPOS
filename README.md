@@ -54,7 +54,7 @@ array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Normal), cfe.infCFe.emit.xNome
           LF, "CUPOM FISCAL ELETRONICO - SAT".ToBytes(), SelectCharSizeHeight(CharSizeHeight.Normal),
           LF, LF);
 
-if (!String.IsNullOrEmpty(cfe.infCFe.dest?.Item))
+if (!string.IsNullOrEmpty(cfe.infCFe.dest?.Item))
     array.Add(line, "CPF/CNPJ do Consumidor:".ToBytes(), cfe.infCFe.dest.Item.ToBytes(), LF);
 
 array.Add(line, "#|COD|DESC|QTD|UN|VL UNIT R$|(VL TRIB R$)*|VL ITEM R$".ToBytes(),
@@ -67,7 +67,7 @@ foreach (var det in cfe.infCFe.det)
     array.Add($" {i++:D3} ".ToBytes());
     while (prod.Length > 20)
     {
-        array.Add(prod.Truncate(20).ToBytes(), LF, "     ".ToBytes());
+        array.Add(prod.Substring(0, 20).ToBytes(), LF, "     ".ToBytes());
         prod = prod.Substring(20);
     }
     array.Add(prod.PadRight(20).ToBytes(), $"{$"{det.prod.vProd:f2}".PadLeft(6)}".ToBytes(), LF);
