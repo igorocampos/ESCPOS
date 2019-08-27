@@ -29,10 +29,10 @@ namespace ESCPOS.Utils
 
     public enum QRCodeCorrection
     {
-        LevelL = 48,
-        LevelM,
-        LevelQ,
-        LevelH
+        Percent7 = 48,
+        Percent15,
+        Percent25,
+        Percent30
     }
 
     public enum QRCodeSize
