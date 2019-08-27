@@ -3,13 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Igor Campos</Authors>
-    <Description>A ESC/POS Printer Commands Helper</Description>
+    <Description>A .NET Standard 2.0 ESC/POS Printer Commands Helper</Description>
     <PackageProjectUrl>https://github.com/igorocampos/ESCPOS</PackageProjectUrl>
     <RepositoryUrl>https://github.com/igorocampos/ESCPOS</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression></PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
+    <PackageIconUrl>http://campos.cf/ESC_POS.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
