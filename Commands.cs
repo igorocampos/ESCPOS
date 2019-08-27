@@ -171,7 +171,7 @@ namespace ESCPOS
         /// <summary>
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
-        public static byte[] PrintQRCode(string content, QRCodeModel qrCodemodel, QRCodeCorrection qrodeCorrection, QRCodeSize qrCodeSize)
+        public static byte[] PrintQRCode(string content, QRCodeModel qrCodemodel = QRCodeModel.Model1, QRCodeCorrection qrodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
         {
             var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodemodel, 0x00 };
             var size = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, (byte)qrCodeSize };
