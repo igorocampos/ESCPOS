@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ESCPOS.Utils
@@ -25,6 +26,27 @@ namespace ESCPOS.Utils
                 array1 = array1.Add(array2);
 
             return array1;
+        }
+
+        public static void Print(this byte[] data, string printerAddress)
+        {
+            if (string.IsNullOrEmpty(printerAddress))
+                throw new ArgumentException($"Printer address can't be null or empty", printerAddress);
+            string tempFile = "esc_pos.temp";
+            if (File.Exists(tempFile))
+            {
+                try
+                {
+                    File.Delete(tempFile);
+                }
+                catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+                {
+                    tempFile = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_{tempFile}";
+                }
+            }
+
+            File.WriteAllBytes(tempFile, data);
+            File.Move(tempFile, printerAddress);
         }
     }
 
