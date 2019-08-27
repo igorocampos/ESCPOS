@@ -136,8 +136,8 @@ namespace ESCPOS
         /// <summary>
         /// ESC { n
         /// </summary>
-        public static byte[] UpsideDown(OnOff onOff)
-            => new byte[] { 0x1B, 0x7B, (byte)onOff };
+        public static byte[] UpsideDown(OnOff @switch)
+            => new byte[] { 0x1B, 0x7B, (byte)@switch };
 
         /// <summary>
         /// GS ! n
