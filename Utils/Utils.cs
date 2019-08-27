@@ -49,7 +49,7 @@ namespace ESCPOS.Utils
             }
 
             File.WriteAllBytes(tempFile, data);
-            File.Move(tempFile, printerAddress);
+            File.Copy(tempFile, printerAddress, true);
         }
     }
 
