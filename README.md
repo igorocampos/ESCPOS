@@ -130,7 +130,7 @@ foreach (var mp in cfe.infCFe.pgto.MP)
     array.Add($" {description.PadRight(18)}{mp.vMP.ToString("f2").PadLeft(12)}".ToBytes(), LF);
 }
 
-String accessKey = cfe.infCFe.Id.Digits();
+String accessKey = cfe.infCFe.Id.Substring(3, 44);
 array.Add($" Troco{$"{cfe.infCFe.pgto.vTroco:f2}".PadLeft(25)}".ToBytes(), LF);
 
 foreach (var obs in cfe.infCFe.infAdic.obsFisco)
