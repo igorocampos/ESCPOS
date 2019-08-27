@@ -148,7 +148,7 @@ array.Add(LF, line, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustifica
           SelectCharSizeHeight(CharSizeHeight.Normal),
           LF, line, LF, LF, LF);
 
-Print(array, "\\127.0.0.1\printer");
+array.Print("\\127.0.0.1\printer");
 ```
 
 # Considerations
