@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ESCPOS.Utils;
+using System;
 using System.Text;
 
 namespace ESCPOS

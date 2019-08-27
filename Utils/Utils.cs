@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ESCPOS
+namespace ESCPOS.Utils
 {
     public static class Utils
     {
