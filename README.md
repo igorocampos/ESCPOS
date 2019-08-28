@@ -7,7 +7,9 @@ A ESC/POS Printer Commands Helper
 
 The NuGet Package can be found [here](https://www.nuget.org/packages/ESCPOS/) and you can install it with:
 
-```PM> Install-Package ESCPOS```
+```powershell
+PM> Install-Package ESCPOS
+```
 
 # Usage
 All command methods will return a byte array that you should concatenate with the bytes of your data, and then send it all to your printer. 
