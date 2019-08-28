@@ -11,20 +11,20 @@ namespace UnitTest
     public class UnitTest
     {
         const string TEST_FILE = "test.txt";
-        const string TEXT_DATA = "Data test for QRCode with some special characters: $ñáãç*/&#@\"'^{}";
+        const string TEXT_DATA = "Data test with some special characters: $ñáãç*/&#@\"'^{}";
 
         [TestMethod]
         public void QRCode_NoParameter()
         {
             PrintQRCode(TEXT_DATA).Print(TEST_FILE);
-            ShouldEqualWithDiff("(k\01A1\0(k\01C(k\01E0(kE\01P0Data test for QRCode with some special characters: $ñáãç*/&#@\"'^{}(k\01Q0", File.ReadAllText(TEST_FILE));
+            ShouldEqualWithDiff("(k\01A1\0(k\01C(k\01E0(kE\01P0Data test with some special characters: $ñáãç*/&#@\"'^{}(k\01Q0", File.ReadAllText(TEST_FILE));
         }
 
         [TestMethod]
         public void QRCode_FullParameters()
         {
             PrintQRCode(TEXT_DATA, QRCodeModel.Model2, QRCodeCorrection.Percent30, QRCodeSize.Large).Print(TEST_FILE);
-            ShouldEqualWithDiff("(k\01A2\0(k\01C(k\01E3(kE\01P0Data test for QRCode with some special characters: $ñáãç*/&#@\"'^{}(k\01Q0", File.ReadAllText(TEST_FILE));
+            ShouldEqualWithDiff("(k\01A2\0(k\01C(k\01E3(kE\01P0Data test with some special characters: $ñáãç*/&#@\"'^{}(k\01Q0", File.ReadAllText(TEST_FILE));
         }
 
         [TestMethod]
@@ -59,35 +59,35 @@ namespace UnitTest
         public void DoubleHeight()
         {
             SelectCharSizeHeight(CharSizeHeight.Double).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "!Data test for QRCode with some special characters: $ñáãç*/&#@\"'^{}");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "!Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void DoubleWidth()
         {
             SelectCharSizeWidth(CharSizeWidth.Double).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "!Data test for QRCode with some special characters: $ñáãç*/&#@\"'^{}");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "!Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void AlignCenter()
         {
             SelectJustification(Justification.Center).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "aData test for QRCode with some special characters: $ñáãç*/&#@\"'^{}");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "aData test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void AlignRight()
         {
             SelectJustification(Justification.Right).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "aData test for QRCode with some special characters: $ñáãç*/&#@\"'^{}");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "aData test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void AlignLeft()
         {
             SelectJustification(Justification.Left).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "a\0Data test for QRCode with some special characters: $ñáãç*/&#@\"'^{}");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "a\0Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
     }
