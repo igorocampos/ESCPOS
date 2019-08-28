@@ -14,11 +14,16 @@ All command methods will return a byte array that you should concatenate with th
 
 The `Print` extension method will send a byte array to the informed printer address, which can be something like `COM3`, `LPT1`, `\\127.0.0.1\printer`, etc or even a path to a text file like `./print.txt`.
 
-There is also an `Add` extension method for byte arrays, you can use it to concatenate 2 or more byte arrays just like this:
+There is also an `Add` and `ToBytes` extension methods located in the namespace `ESCPOS.Utils`. 
+The first one for byte arrays, you can use it to concatenate 2 or more byte arrays just like this:
 ```cs
 byte[] result = array1.Add(array2, array3, ..., arrayN);
 ```
 
+The second for strings, you can use it to convert a UTF-8 string to a byte array
+```cs
+byte[] result = "Some string".ToBytes();
+```
 ## Examples
 
 All examples will assume the below using statements
