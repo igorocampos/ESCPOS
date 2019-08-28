@@ -24,6 +24,7 @@ byte[] result = array1.Add(array2, array3, ..., arrayN);
 All examples will assume the below using statements
 ```cs
 using static ESCPOS.Commands;
+using ESCPOS;
 using ESCPOS.Utils;
 ```
 
