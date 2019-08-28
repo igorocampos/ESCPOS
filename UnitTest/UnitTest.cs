@@ -3,6 +3,7 @@ using static ESCPOS.Commands;
 using static UnitTest.StringDiffHelper;
 using ESCPOS.Utils;
 using System.IO;
+using ESCPOS;
 
 namespace UnitTest
 {
