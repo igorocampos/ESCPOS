@@ -1,5 +1,5 @@
 [![NuGet](https://buildstats.info/nuget/ESCPOS)](http://www.nuget.org/packages/ESCPOS)
-![GitHub](https://img.shields.io/github/license/igorocampos/ESCPOS)
+[![GitHub](https://img.shields.io/github/license/igorocampos/ESCPOS)](ESCPOS/LICENSE)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS?ref=badge_shield)
 
 # ESCPOS
