@@ -1,4 +1,5 @@
 [![NuGet](https://buildstats.info/nuget/ESCPOS)](http://www.nuget.org/packages/ESCPOS)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS?ref=badge_shield)
 
 # ESCPOS
 A ESC/POS Printer Commands Helper
@@ -169,3 +170,7 @@ array.Print(@"\\127.0.0.1\printer");
 This library will only accept UTF8 Encoding for Barcodes and QRCodes data.
 
 You can see then changelog [here](CHANGELOG.md)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS?ref=badge_large)
