@@ -10,7 +10,7 @@ variables:
 steps:
 - task: DotNetCoreInstaller@0
   inputs:
-    version: '2.2.x'
+    version: '2.2.6'
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
