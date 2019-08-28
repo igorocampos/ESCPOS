@@ -4,6 +4,9 @@ A ESC/POS Printer Commands Helper
 ![](https://github.com/igorocampos/ESCPOS/blob/master/ESC_POS.png)
 
 # Installing via the NuGet Package
+
+The NuGet Package can be found [here](https://www.nuget.org/packages/ESCPOS/) and you can install it with:
+
 ```PM> Install-Package ESCPOS```
 
 # Usage
