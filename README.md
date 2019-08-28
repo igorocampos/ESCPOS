@@ -165,3 +165,5 @@ array.Print(@"\\127.0.0.1\printer");
 
 # Considerations
 This library will only accept UTF8 Encoding for Barcodes and QRCodes data.
+
+You can see then changelog [here](CHANGELOG.md)
