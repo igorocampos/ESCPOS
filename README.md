@@ -1,3 +1,5 @@
+[![NuGet](https://buildstats.info/nuget/ESCPOS)](http://www.nuget.org/packages/ESCPOS)
+
 # ESCPOS
 A ESC/POS Printer Commands Helper
 
