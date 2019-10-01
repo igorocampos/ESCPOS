@@ -93,12 +93,12 @@ foreach (var det in cfe.infCFe.det)
 
 array.Add(LF);
 if (cfe.infCFe.total.ICMSTot.vDesc > 0)
-    array.Add($" Desconto R${$"{cfe.infCFe.total.ICMSTot.vDesc:f2}".PadLeft(19)}".ToBytes(), LF);
+    array.Add($" Desconto R${cfe.infCFe.total.ICMSTot.vDesc.ToString("f2").PadLeft(19)}".ToBytes(), LF);
 
 if (cfe.infCFe.total.ICMSTot.vOutro > 0)
-    array.Add($" Acrescimo R${$"{cfe.infCFe.total.ICMSTot.vOutro:f2}".PadLeft(18)}".ToBytes(), LF);
+    array.Add($" Acrescimo R${cfe.infCFe.total.ICMSTot.vOutro.ToString("f2").PadLeft(18)}".ToBytes(), LF);
 
-array.Add(SelectCharSizeHeight(CharSizeHeight.Double), $" TOTAL R${$"{cfe.infCFe.total.vCFe:f2}".PadLeft(22)}".ToBytes(), LF,
+array.Add(SelectCharSizeHeight(CharSizeHeight.Double), $" TOTAL R${cfe.infCFe.total.vCFe.ToString("f2").PadLeft(22)}".ToBytes(), LF,
           SelectCharSizeHeight(CharSizeHeight.Normal), LF);
 
 foreach (var mp in cfe.infCFe.pgto.MP)
@@ -148,7 +148,7 @@ foreach (var mp in cfe.infCFe.pgto.MP)
 }
 
 String accessKey = cfe.infCFe.Id.Substring(3, 44);
-array.Add($" Troco{$"{cfe.infCFe.pgto.vTroco:f2}".PadLeft(25)}".ToBytes(), LF);
+array.Add($" Troco{cfe.infCFe.pgto.vTroco.ToString("f2").PadLeft(25)}".ToBytes(), LF);
 
 foreach (var obs in cfe.infCFe.infAdic.obsFisco)
     array.Add($" {obs.xCampo}-{obs.xTexto}".ToBytes(), LF);
