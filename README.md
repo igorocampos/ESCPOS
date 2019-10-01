@@ -88,7 +88,7 @@ foreach (var det in cfe.infCFe.det)
         array.Add(wrap).ToBytes(), LF, "     ".ToBytes());
         prod = prod.Substring(20);
     }
-    array.Add(prod.PadRight(20).ToBytes(), $"{$"{det.prod.vProd:f2}".PadLeft(6)}".ToBytes(), LF);
+    array.Add(prod.PadRight(20).ToBytes(), $"{det.prod.vProd:f2}".PadLeft(6).ToBytes(), LF);
 }
 
 array.Add(LF);
