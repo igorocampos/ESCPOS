@@ -88,7 +88,7 @@ foreach (var det in cfe.infCFe.det)
         array.Add(wrap).ToBytes(), LF, "     ".ToBytes());
         prod = prod.Substring(20);
     }
-    array.Add(prod.PadRight(20).ToBytes(), $"{det.prod.vProd:f2}".PadLeft(6).ToBytes(), LF);
+    array.Add(prod.PadRight(20).ToBytes(), det.prod.vProd.ToString("f2").PadLeft(6).ToBytes(), LF);
 }
 
 array.Add(LF);
@@ -106,9 +106,6 @@ foreach (var mp in cfe.infCFe.pgto.MP)
     string description;
     switch (Convert.ToInt32(mp.cMP ?? "1"))
     {
-        case 1:
-            description = "Dinheiro";
-            break;
         case 2:
             description = "Cheque";
             break;
