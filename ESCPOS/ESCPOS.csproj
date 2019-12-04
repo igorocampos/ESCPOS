@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
     <Authors>Igor Campos</Authors>
     <Description>A .NET Standard 2.0 ESC/POS Printer Commands Helper</Description>
     <PackageProjectUrl>https://github.com/igorocampos/ESCPOS</PackageProjectUrl>

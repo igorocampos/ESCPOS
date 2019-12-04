@@ -38,16 +38,16 @@ namespace ESCPOSTest
         private static string ToSafeString(this char c)
         {
             if (char.IsControl(c) || char.IsWhiteSpace(c))
-                switch (c)
+                return c switch
                 {
-                    case '\r': return @"\r";
-                    case '\n': return @"\n";
-                    case '\t': return @"\t";
-                    case '\a': return @"\a";
-                    case '\v': return @"\v";
-                    case '\f': return @"\f";
-                    default: return $"\\u{(int)c:X};";
-                }
+                    '\r' => @"\r",
+                    '\n' => @"\n",
+                    '\t' => @"\t",
+                    '\a' => @"\a",
+                    '\v' => @"\v",
+                    '\f' => @"\f",
+                    _ => $"\\u{(int) c:X};"
+                };
 
             return c.ToString(CultureInfo.InvariantCulture);
         }
