@@ -199,7 +199,7 @@ namespace ESCPOS
         public static void Print(this byte[] data, string printerAddress)
         {
             if (string.IsNullOrEmpty(printerAddress))
-                throw new ArgumentException($"Printer address can't be null or empty", printerAddress);
+                throw new ArgumentException("Printer address can't be null or empty", printerAddress);
 
             string tempFile = "esc_pos.temp";
             if (File.Exists(tempFile))
