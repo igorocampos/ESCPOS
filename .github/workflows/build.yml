@@ -1,0 +1,17 @@
+name: Build
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-dotnet@v1.3.0
+      with:
+        dotnet-version: '3.1.100'
+    - run: dotnet build ESCPOS.sln
+    - run: dotnet test ESCPOSTest/ESCPOSTest.csproj
