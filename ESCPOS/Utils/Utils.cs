@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
@@ -6,6 +7,11 @@ namespace ESCPOS.Utils
 {
     public static class Utils
     {
+#if NETCOREAPP
+         
+        [return: NotNullIfNotNull("array1")]
+        [return: NotNullIfNotNull("array2")]
+#endif
         private static byte[]? Add(this byte[]? array1, byte[]? array2)
         {
             if (array1 is null)
@@ -19,6 +25,9 @@ namespace ESCPOS.Utils
             Array.Copy(array2, 0, result, array1.Length, array2.Length);
             return result;
         }
+#if NETCOREAPP
+        [return: NotNullIfNotNull("array1")]
+#endif
         public static byte[]? Add(this byte[]? array1, params byte[]?[] arrays) 
             => arrays.Aggregate(array1, (current, array2) => current.Add(array2));
 

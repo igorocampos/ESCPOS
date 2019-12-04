@@ -180,7 +180,12 @@ namespace ESCPOS
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
             var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)barCode.Length };
             var bar = Encoding.UTF8.GetBytes(barCode);
-            return height.Add(settings, bar)!;
+            var ret = height.Add(settings, bar);
+            #if NETCOREAPP
+            return ret;
+#else
+            return ret!;
+#endif
         }
 
         /// <summary>
@@ -201,7 +206,12 @@ namespace ESCPOS
             var storeData = new byte[] { 0x1D, 0x28, 0x6B, (byte)pL, (byte)pH, 0x31, 0x50, 0x30 };
             var data = Encoding.UTF8.GetBytes(content);
             var print = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30 };
-            return model.Add(size, errorCorrection, storeData, data, print)!;
+            var ret = model.Add(size, errorCorrection, storeData, data, print);
+#if NETCOREAPP
+            return ret;
+#else
+            return ret!;
+#endif
         }
 
         /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty.</exception>
