@@ -11,12 +11,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    version: 3.1
+    version: 3.1.100
     command: build
     projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
   inputs:
-    version: 3.1
+    version: 3.1.100
     command: test
     projects: '**/*Test/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
