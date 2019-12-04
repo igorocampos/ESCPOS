@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace ESCPOS.Utils
 {
     public static class Utils
     {
-        private static byte[] Add(this byte[] array1, byte[] array2)
+        private static byte[]? Add(this byte[]? array1, byte[]? array2)
         {
             if (array1 is null)
                 return array2;
@@ -18,13 +19,8 @@ namespace ESCPOS.Utils
             Array.Copy(array2, 0, result, array1.Length, array2.Length);
             return result;
         }
-        public static byte[] Add(this byte[] array1, params byte[][] arrays)
-        {
-            foreach (byte[] array2 in arrays)
-                array1 = array1.Add(array2);
-
-            return array1;
-        }
+        public static byte[]? Add(this byte[]? array1, params byte[]?[] arrays) 
+            => arrays.Aggregate(array1, (current, array2) => current.Add(array2));
 
         public static byte[] ToBytes(this string source)
             => Encoding.UTF8.GetBytes(source);
