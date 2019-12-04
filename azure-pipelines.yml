@@ -8,15 +8,18 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: Use .NET Core SDK
+  inputs:
+    packageType: sdk
+    version: 3.1.100
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    version: 3.1.100
     command: build
     projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
   inputs:
-    version: 3.1.100
     command: test
     projects: '**/*Test/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
