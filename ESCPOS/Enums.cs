@@ -1,4 +1,4 @@
-﻿namespace ESCPOS
+namespace ESCPOS
 {
     public enum OnOff
     {
@@ -155,5 +155,4 @@
         Double = 4,
         Triple = 6
     }
-
 }

@@ -89,6 +89,5 @@ namespace ESCPOSTest
             SelectJustification(Justification.Left).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Ba\0Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
-
     }
 }
