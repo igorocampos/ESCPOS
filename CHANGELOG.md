@@ -16,4 +16,4 @@
 
 # v1.0.1
 - First functional version
-- No Test Project is avaiable yet
+- No Test Project is available yet
