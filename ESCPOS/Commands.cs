@@ -1,4 +1,4 @@
-﻿using ESCPOS.Utils;
+using ESCPOS.Utils;
 using System;
 using System.IO;
 using System.Text;
@@ -171,8 +171,12 @@ namespace ESCPOS
         /// <summary>
         /// GS k m n
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="barCode"/> is <see langword="null"/>.</exception>
         public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162)
         {
+            if (barCode == null) 
+                throw new ArgumentNullException(nameof(barCode));
+
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
             var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)barCode.Length };
             var bar = Encoding.UTF8.GetBytes(barCode);
@@ -182,8 +186,12 @@ namespace ESCPOS
         /// <summary>
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
         public static byte[] PrintQRCode(string content, QRCodeModel qrCodemodel = QRCodeModel.Model1, QRCodeCorrection qrodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
         {
+            if (content == null) 
+                throw new ArgumentNullException(nameof(content));
+
             var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodemodel, 0x00 };
             var size = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, (byte)qrCodeSize };
             var errorCorrection = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x45, (byte)qrodeCorrection };
@@ -196,10 +204,15 @@ namespace ESCPOS
             return model.Add(size, errorCorrection, storeData, data, print);
         }
 
+        /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="printerAddress"/> is <see langword="null"/>.</exception>
         public static void Print(this byte[] data, string printerAddress)
         {
-            if (string.IsNullOrEmpty(printerAddress))
-                throw new ArgumentException("Printer address can't be null or empty", printerAddress);
+            if (printerAddress == null) 
+                throw new ArgumentNullException(nameof(printerAddress));
+
+            if (printerAddress.Length == 0)
+                throw new ArgumentException("Printer address can't be empty", nameof(printerAddress));
 
             string tempFile = "esc_pos.temp";
             if (File.Exists(tempFile))
