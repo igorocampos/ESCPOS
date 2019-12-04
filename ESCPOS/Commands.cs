@@ -20,7 +20,7 @@ namespace ESCPOS
         public static byte[] HorizontalTab => new byte[] { 0x09 };
 
         /// <summary>
-        ///Prints the data in the print buffer and feeds one line based on the current line spacing.
+        /// Prints the data in the print buffer and feeds one line based on the current line spacing.
         /// </summary>
         /// <remarks>
         /// ·This command sets the print position to the beginning of the line.
@@ -28,7 +28,7 @@ namespace ESCPOS
         public static byte[] LineFeed => new byte[] { 0x0A };
 
         /// <summary>
-        ///When automatic line feed is enabled, this command functions the same as LF, when automatic line feed is disabled, this command is ignored
+        /// When automatic line feed is enabled, this command functions the same as LF, when automatic line feed is disabled, this command is ignored
         /// </summary>
         /// <remarks>
         /// ·Sets the print starting position to the beginning of the line.
@@ -37,22 +37,22 @@ namespace ESCPOS
         public static byte[] CarriageReturn => new byte[] { 0x0D };
 
         /// <summary>
-        ///Prints the data in the print buffer and returns to standard mode.
+        /// Prints the data in the print buffer and returns to standard mode.
         /// </summary>
         /// <remarks>
-        ///·The buffer data is deleted after being printed.
-        ///·The printer does not execute paper cutting.
-        ///·This command sets the print position to the beginning of the line.
-        ///·This command is enabled only in page mode.
+        /// ·The buffer data is deleted after being printed.
+        /// ·The printer does not execute paper cutting.
+        /// ·This command sets the print position to the beginning of the line.
+        /// ·This command is enabled only in page mode.
         /// </remarks>
         public static byte[] PrintAndReturnToStandardMode => new byte[] { 0x0C };
 
         /// <summary>
-        ///In page mode, delete all the print data in the current printable area.
+        /// In page mode, delete all the print data in the current printable area.
         /// </summary>
         /// <remarks>
-        ///·This command is enabled only in page mode.
-        ///·If data that existed in the previously specified printable area also exists in the currently specified printable area, it is deleted.
+        /// ·This command is enabled only in page mode.
+        /// ·If data that existed in the previously specified printable area also exists in the currently specified printable area, it is deleted.
         /// </remarks>
         public static byte[] CancelPrint => new byte[] { 0x18 };
 
