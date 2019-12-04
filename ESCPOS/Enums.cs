@@ -68,7 +68,9 @@ namespace ESCPOS
         Octuple
     }
 
+#pragma warning disable CA1027 // Mark enums with FlagsAttribute
     public enum CharSizeWidth
+#pragma warning restore CA1027 // Mark enums with FlagsAttribute
     {
         Normal,
         Double = 16,
@@ -132,7 +134,9 @@ namespace ESCPOS
         B
     }
 
+#pragma warning disable CA1027 // Mark enums with FlagsAttribute
     public enum PrintMode
+#pragma warning restore CA1027 // Mark enums with FlagsAttribute
     {
         Reset,
         FontB,
@@ -149,7 +153,9 @@ namespace ESCPOS
         TwoDotsThick
     }
 
+#pragma warning disable CA1027 // Mark enums with FlagsAttribute
     public enum LineSpacing
+#pragma warning restore CA1027 // Mark enums with FlagsAttribute
     {
         Default = 2,
         Double = 4,
