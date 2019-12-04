@@ -10,8 +10,8 @@ namespace ESCPOSTest
     [TestClass]
     public class UnitTest
     {
-        const string TEST_FILE = "test.txt";
-        const string TEXT_DATA = "Data test with some special characters: $ñáãç*/&#@\"'^{}";
+        private const string TEST_FILE = "test.txt";
+        private const string TEXT_DATA = "Data test with some special characters: $ñáãç*/&#@\"'^{}";
 
         [TestMethod]
         public void QRCode_NoParameter()
