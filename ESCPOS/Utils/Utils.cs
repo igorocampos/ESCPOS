@@ -1,5 +1,7 @@
 ﻿using System;
+#if NETCOREAPP
 using System.Diagnostics.CodeAnalysis;
+#endif
 using System.Linq;
 using System.Text;
 
