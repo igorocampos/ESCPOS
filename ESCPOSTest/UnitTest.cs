@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static ESCPOS.Commands;
-using static UnitTest.StringDiffHelper;
-using ESCPOS.Utils;
 using System.IO;
 using ESCPOS;
+using ESCPOS.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static ESCPOS.Commands;
+using static ESCPOSTest.StringDiffHelper;
 
-namespace UnitTest
+namespace ESCPOSTest
 {
     [TestClass]
     public class UnitTest

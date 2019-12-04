@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTest
+namespace ESCPOSTest
 {
     //For more information, please see https://haacked.com/archive/2012/01/14/comparing-strings-in-unit-tests.aspx/
     public static class StringDiffHelper
