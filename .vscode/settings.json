@@ -1,0 +1,27 @@
+{
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false,
+    },
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+    ],
+    "files.exclude": {
+        "**/.vs": true,
+        "**/.idea": true,
+        "**/*.iml": true,
+        "**/bin": true,
+        "**/FakesAssemblies": true,
+        "**/obj": true,
+        "**/packages": true,
+        "**/*.user": true,
+        "**/TestResults": true,
+        "MigrationBackup/": true,
+        "**/*.[Cc]ache": true,
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+}

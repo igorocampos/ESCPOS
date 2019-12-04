@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "logerfo.sln-support",
+        "ms-vscode.csharp",
+        "tintoy.msbuild-project-tools",
+        "redhat.vscode-yaml",
+        "formulahendry.dotnet-test-explorer",
+        "ban.spellright",
+    ]
+}
