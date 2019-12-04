@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
