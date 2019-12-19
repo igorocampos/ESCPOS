@@ -5,7 +5,7 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS?ref=badge_shield)
 
 # ESCPOS
-A ESC/POS Printer Commands Helper
+A ESC/POS Printer Commands Helper.
 
 ![](https://github.com/igorocampos/ESCPOS/blob/master/ESC_POS.png)
 
@@ -20,7 +20,7 @@ PM> Install-Package ESCPOS
 # Usage
 All command methods will return a byte array that you should concatenate with the bytes of your data, and then send it all to your printer. 
 
-The `Print` extension method will send a byte array to the informed printer address, which can be something like `COM3`, `LPT1`, `\\127.0.0.1\printer`, etc or even a path to a text file like `./print.txt`.
+The `Print` extension method will send a byte array to the informed printer address, which can be something like `COM3`, `LPT1`, `\\127.0.0.1\printer`, etc. or even a path to a text file like `./print.txt`.
 
 There is also an `Add` and `ToBytes` extension methods located in the namespace `ESCPOS.Utils`. 
 The first one for byte arrays, you can use it to concatenate 2 or more byte arrays just like this:
@@ -28,13 +28,13 @@ The first one for byte arrays, you can use it to concatenate 2 or more byte arra
 byte[] result = array1.Add(array2, array3, ..., arrayN);
 ```
 
-The second for strings, you can use it to convert a UTF-8 string to a byte array
+The second for strings, you can use it to convert a UTF-8 string to a byte array:
 ```cs
 byte[] result = "Some string".ToBytes();
 ```
 ## Examples
 
-All examples will assume the below using statements
+All examples will assume the using statements below:
 ```cs
 using static ESCPOS.Commands;
 using ESCPOS;
@@ -169,7 +169,7 @@ array.Print(@"\\127.0.0.1\printer");
 # Considerations
 This library will only accept UTF8 Encoding for Barcodes and QRCodes data.
 
-You can see the changelog [here](CHANGELOG.md)
+You can see the changelog [here](CHANGELOG.md).
 
 
 ## License

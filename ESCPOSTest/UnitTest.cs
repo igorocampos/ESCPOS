@@ -1,17 +1,17 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static ESCPOS.Commands;
-using static UnitTest.StringDiffHelper;
-using ESCPOS.Utils;
 using System.IO;
 using ESCPOS;
+using ESCPOS.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static ESCPOS.Commands;
+using static ESCPOSTest.StringDiffHelper;
 
-namespace UnitTest
+namespace ESCPOSTest
 {
     [TestClass]
     public class UnitTest
     {
-        const string TEST_FILE = "test.txt";
-        const string TEXT_DATA = "Data test with some special characters: $ñáãç*/&#@\"'^{}";
+        private const string TEST_FILE = "test.txt";
+        private const string TEXT_DATA = "Data test with some special characters: $ñáãç*/&#@\"'^{}";
 
         [TestMethod]
         public void QRCode_NoParameter()
@@ -89,6 +89,5 @@ namespace UnitTest
             SelectJustification(Justification.Left).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Ba\0Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
-
     }
 }

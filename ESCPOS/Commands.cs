@@ -13,37 +13,47 @@ namespace ESCPOS
         /// </summary>
         /// <remarks>
         /// ·This command is ignored unless the next tab position has been set.
-        /// ·If the next horizontal tab position exceeds the printing area, the printer sets the printing position to[Printing area width + 1].        /// ·If this command is received when the printing position is at [printing area width +1], the printer executes print buffer-full printing of the current line and horizontal tab processing from the beginning of the next line.
-        /// ·The default setting of the horizontal tab position for the paper roll is font A (12 x 24) every 8th character(9th, 17th, 25th, … column).        /// </remarks>
+        /// ·If the next horizontal tab position exceeds the printing area, the printer sets the printing position to[Printing area width + 1].
+        /// ·If this command is received when the printing position is at [printing area width +1], the printer executes print buffer-full printing of the current line and horizontal tab processing from the beginning of the next line.
+        /// ·The default setting of the horizontal tab position for the paper roll is font A (12 x 24) every 8th character(9th, 17th, 25th, … column).
+        /// </remarks>
         public static byte[] HorizontalTab => new byte[] { 0x09 };
 
         /// <summary>
-        ///Prints the data in the print buffer and feeds one line based on the current line spacing.        /// </summary>
+        /// Prints the data in the print buffer and feeds one line based on the current line spacing.
+        /// </summary>
         /// <remarks>
-        /// ·This command sets the print position to the beginning of the line.        /// </remarks>
+        /// ·This command sets the print position to the beginning of the line.
+        /// </remarks>
         public static byte[] LineFeed => new byte[] { 0x0A };
 
         /// <summary>
-        ///When automatic line feed is enabled, this command functions the same as LF, when automatic line feed is disabled, this command is ignored        /// </summary>
+        /// When automatic line feed is enabled, this command functions the same as LF, when automatic line feed is disabled, this command is ignored
+        /// </summary>
         /// <remarks>
         /// ·Sets the print starting position to the beginning of the line.
-        /// ·The automatic line feed is ignored.        /// </remarks>
+        /// ·The automatic line feed is ignored.
+        /// </remarks>
         public static byte[] CarriageReturn => new byte[] { 0x0D };
 
         /// <summary>
-        ///Prints the data in the print buffer and returns to standard mode.        /// </summary>
+        /// Prints the data in the print buffer and returns to standard mode.
+        /// </summary>
         /// <remarks>
-        ///·The buffer data is deleted after being printed.
-        ///·The printer does not execute paper cutting.
-        ///·This command sets the print position to the beginning of the line.
-        ///·This command is enabled only in page mode.        /// </remarks>
+        /// ·The buffer data is deleted after being printed.
+        /// ·The printer does not execute paper cutting.
+        /// ·This command sets the print position to the beginning of the line.
+        /// ·This command is enabled only in page mode.
+        /// </remarks>
         public static byte[] PrintAndReturnToStandardMode => new byte[] { 0x0C };
 
         /// <summary>
-        ///In page mode, delete all the print data in the current printable area.        /// </summary>
+        /// In page mode, delete all the print data in the current printable area.
+        /// </summary>
         /// <remarks>
-        ///·This command is enabled only in page mode.
-        ///·If data that existed in the previously specified printable area also exists in the currently specified printable area, it is deleted.        /// </remarks>
+        /// ·This command is enabled only in page mode.
+        /// ·If data that existed in the previously specified printable area also exists in the currently specified printable area, it is deleted.
+        /// </remarks>
         public static byte[] CancelPrint => new byte[] { 0x18 };
 
         //Alias
@@ -161,6 +171,7 @@ namespace ESCPOS
         /// <summary>
         /// GS k m n
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="barCode"/> is <see langword="null"/>.</exception>
         public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162)
         {
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
@@ -172,6 +183,7 @@ namespace ESCPOS
         /// <summary>
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
         public static byte[] PrintQRCode(string content, QRCodeModel qrCodemodel = QRCodeModel.Model1, QRCodeCorrection qrodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
         {
             var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodemodel, 0x00 };
@@ -186,10 +198,15 @@ namespace ESCPOS
             return model.Add(size, errorCorrection, storeData, data, print);
         }
 
+        /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="printerAddress"/> is <see langword="null"/>.</exception>
         public static void Print(this byte[] data, string printerAddress)
         {
-            if (string.IsNullOrEmpty(printerAddress))
-                throw new ArgumentException($"Printer address can't be null or empty", printerAddress);
+            if (printerAddress == null)
+                throw new ArgumentNullException(nameof(printerAddress));
+
+            if (printerAddress.Length == 0)
+                throw new ArgumentException("Printer address can't be empty", nameof(printerAddress));
 
             string tempFile = "esc_pos.temp";
             if (File.Exists(tempFile))
