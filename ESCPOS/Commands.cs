@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Net.Sockets;
 
 namespace ESCPOS
 {
@@ -198,7 +199,7 @@ namespace ESCPOS
             return model.Add(size, errorCorrection, storeData, data, print);
         }
 
-        /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty.</exception>
+        /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty, or in an unexpected format.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="printerAddress"/> is <see langword="null"/>.</exception>
         public static void Print(this byte[] data, string printerAddress)
         {
@@ -207,6 +208,25 @@ namespace ESCPOS
 
             if (printerAddress.Length == 0)
                 throw new ArgumentException("Printer address can't be empty", nameof(printerAddress));
+
+            string[] splittedAddress = printerAddress.Split(':');
+
+            //if printerAddress is a directly connected printer without sharing address, it will be accepted as "{host}:{port}" format
+            if (splittedAddress.Length == 2)
+            {
+                string host = splittedAddress[0];
+                string port = splittedAddress[1];
+                if (!int.TryParse(port, out var portNumber))
+                    throw new ArgumentException($"Print address format should be {{host}}:{{porta}}, but instead it is {host}:{portNumber}");
+
+                using (Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                {
+                    clientSocket.NoDelay = true;
+                    clientSocket.Connect(splittedAddress[0], portNumber);
+                    clientSocket.Send(data);
+                }
+                return;
+            }
 
             string tempFile = "esc_pos.temp";
             if (File.Exists(tempFile))
