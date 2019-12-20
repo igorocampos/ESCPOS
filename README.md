@@ -20,7 +20,7 @@ PM> Install-Package ESCPOS
 # Usage
 All command methods will return a byte array that you should concatenate with the bytes of your data, and then send it all to your printer. 
 
-The `Print` extension method will send a byte array to the informed printer address, which can be something like `COM3`, `LPT1`, `\\127.0.0.1\printer`, etc. or even a path to a text file like `./print.txt`.
+The `Print` extension method will send a byte array to the informed printer address, which can be something like `COM3`, `LPT1`, `\\127.0.0.1\printer`, `192.168.0.100:9100`, etc. or even a path to a text file like `./print.txt`.
 
 There is also an `Add` and `ToBytes` extension methods located in the namespace `ESCPOS.Utils`. 
 The first one for byte arrays, you can use it to concatenate 2 or more byte arrays just like this:
