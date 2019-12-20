@@ -1,3 +1,6 @@
+# v1.1.1
+- `Print` method now allows a network address (host:port) as a printer address.
+
 # v1.1.0
 - Moved `Print` method to `Commands.cs`.
 - Moved all enums to `Enums.cs`.

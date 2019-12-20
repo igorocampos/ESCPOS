@@ -10,9 +10,9 @@
     <PackageLicenseExpression></PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <FileVersion>1.1.1.0</FileVersion>
+    <Version>1.1.1</Version>
     <PackageIcon>ESC_POS.png</PackageIcon>
     <PackageIconUrl>http://campos.cf/ESC_POS.png</PackageIconUrl>
     <PackageTags>escpos;esc;pos;receipt;thermal;printer;esc/pos;sat;cfe</PackageTags>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="../ESC_POS.png" Pack="true" PackagePath="\"/>
+    <None Include="../ESC_POS.png" Pack="true" PackagePath="\" />
     <None Include="LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
