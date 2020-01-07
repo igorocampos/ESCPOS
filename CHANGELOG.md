@@ -1,5 +1,5 @@
 # v1.1.2
-- Bug fixed in `PrintBarCode` method when using CODE128 barcodes (see #9).
+- Bug fixed in `PrintBarCode` method when using CODE128 barcodes (see [#9](https://github.com/igorocampos/ESCPOS/issues/9)).
 
 # v1.1.1
 - `Print` method now allows a network address (host:port) as a printer address.
