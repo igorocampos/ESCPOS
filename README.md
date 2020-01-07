@@ -169,6 +169,8 @@ array.Print(@"\\127.0.0.1\printer");
 # Considerations
 This library will only accept UTF8 Encoding for Barcodes and QRCodes data.
 
+When printing CODE128 barcodes, it will use automatically subset B, which supports numbers, upper and lower case letters and some additional characters.
+
 You can see the changelog [here](CHANGELOG.md).
 
 
