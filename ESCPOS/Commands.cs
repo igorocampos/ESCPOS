@@ -176,8 +176,15 @@ namespace ESCPOS
         public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162)
         {
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
-            var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)barCode.Length };
+            var length = barCode.Length;
             var bar = Encoding.UTF8.GetBytes(barCode);
+            if (barCodeType == BarCodeType.CODE128)
+            {
+                length += 2;
+                bar = new byte[] { 0x7B, 0x42 }.Add(bar); //Subset CODE B is selected for CODE128 bars
+            }
+            var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)length };
+
             return height.Add(settings, bar);
         }
 

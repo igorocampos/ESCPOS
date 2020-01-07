@@ -44,8 +44,8 @@ namespace ESCPOSTest
         [TestMethod]
         public void Barcode_CODE128()
         {
-            PrintBarCode(BarCodeType.CODE128, "ABC123456", 52).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001DkI\u0009ABC123456");
+            PrintBarCode(BarCodeType.CODE128, "ABC1234", 52).Print(TEST_FILE);
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001DkI\u0009{BABC1234");
         }
 
         [TestMethod]
