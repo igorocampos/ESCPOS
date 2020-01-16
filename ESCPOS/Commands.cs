@@ -154,6 +154,15 @@ namespace ESCPOS
         /// <summary>
         /// GS ! n
         /// </summary>
+        public static byte[] SelectCharSize(CharSizeWidth charSizeWidth, CharSizeHeight charSizeHeight)
+        {
+            var charSize = (byte)charSizeWidth | (byte)charSizeHeight;
+            return new byte[] { 0x1D, 0x21, (byte)charSize };
+        }
+
+        /// <summary>
+        /// GS ! n
+        /// </summary>
         public static byte[] SelectCharSizeHeight(CharSizeHeight charSize)
             => new byte[] { 0x1D, 0x21, (byte)charSize };
 
