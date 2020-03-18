@@ -19,6 +19,19 @@ namespace ESCPOS.Utils
             return result;
         }
 
+
+        public static byte[] Add(this byte[] array1, params object[] objects)
+        {
+            foreach (var obj in objects)
+            {
+                if (obj is byte[] array2)
+                    array1 = array1.Add(array2);
+                else if (obj is string str)
+                    array1 = array1.Add(str);
+            }
+            return array1;
+        }
+
         public static byte[] Add(this byte[] array, params string[] strings)
         {
             StringBuilder sb = new StringBuilder();
