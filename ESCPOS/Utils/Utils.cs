@@ -18,6 +18,16 @@ namespace ESCPOS.Utils
             Array.Copy(array2, 0, result, array1.Length, array2.Length);
             return result;
         }
+
+        public static byte[] Add(this byte[] array, params string[] strings)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string str in strings)
+                sb.Append(str);
+
+            return array.Add(sb.ToString().ToBytes());
+        }
+
         public static byte[] Add(this byte[] array1, params byte[][] arrays)
         {
             foreach (byte[] array2 in arrays)

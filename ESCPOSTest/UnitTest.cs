@@ -58,35 +58,35 @@ namespace ESCPOSTest
         [TestMethod]
         public void DoubleHeight()
         {
-            SelectCharSizeHeight(CharSizeHeight.Double).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
+            SelectCharSizeHeight(CharSizeHeight.Double).Add(TEXT_DATA).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001D!\u0001Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void DoubleWidth()
         {
-            SelectCharSizeWidth(CharSizeWidth.Double).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
+            SelectCharSizeWidth(CharSizeWidth.Double).Add(TEXT_DATA).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001D!\u0010Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void AlignCenter()
         {
-            SelectJustification(Justification.Center).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
+            SelectJustification(Justification.Center).Add(TEXT_DATA).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Ba\u0001Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void AlignRight()
         {
-            SelectJustification(Justification.Right).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
+            SelectJustification(Justification.Right).Add(TEXT_DATA).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Ba\u0002Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
 
         [TestMethod]
         public void AlignLeft()
         {
-            SelectJustification(Justification.Left).Add(TEXT_DATA.ToBytes()).Print(TEST_FILE);
+            SelectJustification(Justification.Left).Add(TEXT_DATA).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Ba\0Data test with some special characters: $ñáãç*/&#@\"'^{}");
         }
     }
