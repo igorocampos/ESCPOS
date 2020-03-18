@@ -1,3 +1,7 @@
+# v1.2.0
+- New Utility overload for extension method `Add`, accepting string parameters instead of byte arrays. This will prevent a lot of `.ToBytes()` in the code.
+- New `SelectCharSize` method that combines Width and Height size of characters (see #10).
+
 # v1.1.2
 - Bug fixed in `PrintBarCode` method when using CODE128 barcodes (see [#9](https://github.com/igorocampos/ESCPOS/issues/9)).
 

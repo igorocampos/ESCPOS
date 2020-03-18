@@ -27,6 +27,8 @@ The first one for byte arrays, you can use it to concatenate 2 or more byte arra
 ```cs
 byte[] result = array1.Add(array2, array3, ..., arrayN);
 ```
+There's also an overload to accept string parameters instead of byte arrays. It appends all strings into one new string and then converts it to a byte array.
+And an overload to accept the mix of byte arrays and strings parameters, since it's accepting object type parameters, this will ignore any parameter that is not one of them (e.g. `int`).
 
 The second for strings, you can use it to convert a UTF-8 string to a byte array:
 ```cs
@@ -57,48 +59,48 @@ barCodeCommand.Print("LPT1");
 This example will assume that the variable `cfe` is a deserialized object from the [CFe](https://portal.fazenda.sp.gov.br/servicos/sat) XML, and will print the receipt using its fields.
 Also this example will print a 32 columns receipt, which is ideal for 56mm paper roll.
 ```cs
-var line = "--------------------------------".ToBytes();
+var line = "--------------------------------";
 byte[] array = null;
 array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center));
 if (cfe.infCFe.emit.xFant != null)
-    array.Add(cfe.infCFe.emit.xFant.ToBytes());
+    array.Add(cfe.infCFe.emit.xFant);
 
-array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Normal), cfe.infCFe.emit.xNome.ToBytes(),
-          LF, $"{cfe.infCFe.emit.enderEmit.xLgr},{cfe.infCFe.emit.enderEmit.nro} {cfe.infCFe.emit.enderEmit.xBairro} - {cfe.infCFe.emit.enderEmit.xMun} {cfe.infCFe.emit.enderEmit.CEP}".ToBytes(),
-          LF, $"CNPJ: {cfe.infCFe.emit.CNPJ}".ToBytes(),
-          LF, $"IE: {cfe.infCFe.emit.IE}".ToBytes(),
-          LF, line, SelectCharSizeHeight(CharSizeHeight.Double), $"Extrato No. {cfe.infCFe.ide.nCFe}".ToBytes(),
-          LF, "CUPOM FISCAL ELETRONICO - SAT".ToBytes(), SelectCharSizeHeight(CharSizeHeight.Normal),
+array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Normal), cfe.infCFe.emit.xNome,
+          LF, $"{cfe.infCFe.emit.enderEmit.xLgr},{cfe.infCFe.emit.enderEmit.nro} {cfe.infCFe.emit.enderEmit.xBairro} - {cfe.infCFe.emit.enderEmit.xMun} {cfe.infCFe.emit.enderEmit.CEP}",
+          LF, $"CNPJ: {cfe.infCFe.emit.CNPJ}".,
+          LF, $"IE: {cfe.infCFe.emit.IE}",
+          LF, line, SelectCharSizeHeight(CharSizeHeight.Double), $"Extrato No. {cfe.infCFe.ide.nCFe}",
+          LF, "CUPOM FISCAL ELETRONICO - SAT", SelectCharSizeHeight(CharSizeHeight.Normal),
           LF, LF);
 
 if (!string.IsNullOrEmpty(cfe.infCFe.dest?.Item))
-    array.Add(line, "CPF/CNPJ do Consumidor:".ToBytes(), cfe.infCFe.dest.Item.ToBytes(), LF);
+    array.Add(line, "CPF/CNPJ do Consumidor:", cfe.infCFe.dest.Item, LF);
 
-array.Add(line, "#|COD|DESC|QTD|UN|VL UNIT R$|(VL TRIB R$)*|VL ITEM R$".ToBytes(),
+array.Add(line, "#|COD|DESC|QTD|UN|VL UNIT R$|(VL TRIB R$)*|VL ITEM R$",
           LF, line, SelectJustification(Justification.Left));
 
 int i = 1;
 foreach (var det in cfe.infCFe.det)
 {
     string prod = $"{det.prod.cProd} {det.prod.xProd} {det.prod.qCom:0.0##} {det.prod.uCom} X {det.prod.vUnCom:0.00#} {((det.imposto?.vItem12741 ?? 0) == 0 ? "" : $"({det.imposto.vItem12741:f2})*")}";
-    array.Add($" {i++:D3} ".ToBytes());
+    array.Add($" {i++:D3} ");
     while (prod.Length > 20)
     {
         var wrap = prod.Length >= 20 ? prod.Substring(0,20) : prod;
-        array.Add(wrap).ToBytes(), LF, "     ".ToBytes());
+        array.Add(wrap), LF, "     ");
         prod = prod.Substring(20);
     }
-    array.Add(prod.PadRight(20).ToBytes(), det.prod.vProd.ToString("f2").PadLeft(6).ToBytes(), LF);
+    array.Add(prod.PadRight(20), det.prod.vProd.ToString("f2").PadLeft(6), LF);
 }
 
 array.Add(LF);
 if (cfe.infCFe.total.ICMSTot.vDesc > 0)
-    array.Add($" Desconto R${cfe.infCFe.total.ICMSTot.vDesc.ToString("f2").PadLeft(19)}".ToBytes(), LF);
+    array.Add($" Desconto R${cfe.infCFe.total.ICMSTot.vDesc.ToString("f2").PadLeft(19)}", LF);
 
 if (cfe.infCFe.total.ICMSTot.vOutro > 0)
-    array.Add($" Acrescimo R${cfe.infCFe.total.ICMSTot.vOutro.ToString("f2").PadLeft(18)}".ToBytes(), LF);
+    array.Add($" Acrescimo R${cfe.infCFe.total.ICMSTot.vOutro.ToString("f2").PadLeft(18)}", LF);
 
-array.Add(SelectCharSizeHeight(CharSizeHeight.Double), $" TOTAL R${cfe.infCFe.total.vCFe.ToString("f2").PadLeft(22)}".ToBytes(), LF,
+array.Add(SelectCharSizeHeight(CharSizeHeight.Double), $" TOTAL R${cfe.infCFe.total.vCFe.ToString("f2").PadLeft(22)}", LF,
           SelectCharSizeHeight(CharSizeHeight.Normal), LF);
 
 foreach (var mp in cfe.infCFe.pgto.MP)
@@ -141,22 +143,22 @@ foreach (var mp in cfe.infCFe.pgto.MP)
             break;
     }
 
-    array.Add($" {description.PadRight(18)}{mp.vMP.ToString("f2").PadLeft(12)}".ToBytes(), LF);
+    array.Add($" {description.PadRight(18)}{mp.vMP.ToString("f2").PadLeft(12)}", LF);
 }
 
 String accessKey = cfe.infCFe.Id.Substring(3, 44);
-array.Add($" Troco{cfe.infCFe.pgto.vTroco.ToString("f2").PadLeft(25)}".ToBytes(), LF);
+array.Add($" Troco{cfe.infCFe.pgto.vTroco.ToString("f2").PadLeft(25)}", LF);
 
 foreach (var obs in cfe.infCFe.infAdic.obsFisco)
-    array.Add($" {obs.xCampo}-{obs.xTexto}".ToBytes(), LF);
+    array.Add($" {obs.xCampo}-{obs.xTexto}", LF);
 
-array.Add(line, "OBSERVACOES DO CONTRIBUINTE".ToBytes(), LF);
+array.Add(line, "OBSERVACOES DO CONTRIBUINTE", LF);
 foreach (var item in cfe.infCFe.infAdic.infCpl.Split(';'))
-    array.Add(item.ToBytes(), LF);
+    array.Add(item, LF);
 
-array.Add(LF, line, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center), $"SAT No. {cfe.infCFe.ide.nserieSAT}".ToBytes(),
-          LF, SelectCharSizeHeight(CharSizeHeight.Normal), DateTime.ParseExact($"{cfe.infCFe.ide.dEmi} {cfe.infCFe.ide.hEmi}", "yyyyMMdd HHmmss", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm:ss").ToBytes(),
-          LF, LF, SelectCharSizeHeight(CharSizeHeight.Double), accessKey.ToBytes(),
+array.Add(LF, line, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center), $"SAT No. {cfe.infCFe.ide.nserieSAT}",
+          LF, SelectCharSizeHeight(CharSizeHeight.Normal), DateTime.ParseExact($"{cfe.infCFe.ide.dEmi} {cfe.infCFe.ide.hEmi}", "yyyyMMdd HHmmss", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm:ss"),
+          LF, LF, SelectCharSizeHeight(CharSizeHeight.Double), accessKey,
           LF, LF, PrintBarCode(BarCodeType.CODE128, accessKey.Substring(0, 22), 30), PrintBarCode(BarCodeType.CODE128, accessKey.Substring(22), 30),
           LF, LF,
           PrintQRCode($"{accessKey}|{cfe.infCFe.ide.dEmi}{cfe.infCFe.ide.hEmi}|{cfe.infCFe.total.vCFe}|{cfe.infCFe.dest?.Item ?? ""}|{cfe.infCFe.ide.assinaturaQRCODE}"),
