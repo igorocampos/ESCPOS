@@ -27,7 +27,7 @@ namespace ESCPOS.Utils
                 if (obj is byte[] array2)
                     array1 = array1.Add(array2);
                 else if (obj is string str)
-                    array1 = array1.Add(str);
+                    array1 = array1.Add(str.ToBytes());
             }
             return array1;
         }
