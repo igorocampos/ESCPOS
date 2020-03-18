@@ -63,6 +63,13 @@ namespace ESCPOSTest
         }
 
         [TestMethod]
+        public void DoubleWidthAndHeight()
+        {
+            SelectCharSize(CharSizeWidth.Double, CharSizeHeight.Double).Add(TEXT_DATA).Print(TEST_FILE);
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001D!\u0011Data test with some special characters: $ñáãç*/&#@\"'^{}");
+        }
+
+        [TestMethod]
         public void DoubleWidth()
         {
             SelectCharSizeWidth(CharSizeWidth.Double).Add(TEXT_DATA).Print(TEST_FILE);
