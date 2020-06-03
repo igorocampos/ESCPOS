@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/igorocampos/PersonalProjects/_apis/build/status/igorocampos.ESCPOS?branchName=master)](https://dev.azure.com/igorocampos/PersonalProjects/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/igorocampos/PersonalProjects/_apis/build/status/igorocampos.ESCPOS?branchName=master)](https://dev.azure.com/igorocampos/PersonalProjects/_build?definitionId=1&_a=summary)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/igorocampos/ESCPOS)](#)
 [![NuGet](https://buildstats.info/nuget/ESCPOS)](http://www.nuget.org/packages/ESCPOS)
 [![GitHub](https://img.shields.io/github/license/igorocampos/ESCPOS)](ESCPOS/LICENSE)
