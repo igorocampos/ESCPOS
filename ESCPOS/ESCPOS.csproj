@@ -16,7 +16,15 @@
     <PackageIcon>ESC_POS.png</PackageIcon>
     <PackageIconUrl>http://campos.cf/ESC_POS.png</PackageIconUrl>
     <PackageTags>escpos;esc;pos;receipt;thermal;printer;esc/pos;sat;cfe</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <Compile Remove="UnitTest\**" />
