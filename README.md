@@ -52,7 +52,7 @@ qrCodeCommand.Print("COM2");
 ### Barcode
 ```cs
 byte[] barCodeCommand = PrintBarCode(BarCodeType.EAN13, "9780201379624");
-barCodeCommand.Print("LPT1");
+barCodeCommand.Print("192.168.0.100:9100");
 ```
 
 ### Full CFe SAT Receipt
