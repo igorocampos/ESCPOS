@@ -1,3 +1,6 @@
+# v1.2.1
+- Enabled SourceLink
+
 # v1.2.0
 - New Utility overload for extension method `Add`, accepting string parameters instead of byte arrays. This will prevent a lot of `.ToBytes()` in the code.
 - New `SelectCharSize` method that combines Width and Height size of characters (see [#10](https://github.com/igorocampos/ESCPOS/issues/10)).
