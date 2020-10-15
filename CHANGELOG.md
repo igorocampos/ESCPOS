@@ -1,3 +1,6 @@
+# v1.2.2
+- Fixed SourceLink
+
 # v1.2.1
 - Enabled SourceLink
 
