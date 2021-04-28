@@ -62,7 +62,7 @@ Also this example will print a 32 columns receipt, which is ideal for 56mm paper
 ```cs
 var line = "--------------------------------";
 byte[] array = null;
-array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center));
+array = array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center));
 if (cfe.infCFe.emit.xFant != null)
     array.Add(cfe.infCFe.emit.xFant);
 
