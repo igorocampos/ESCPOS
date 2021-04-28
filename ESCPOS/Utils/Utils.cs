@@ -19,7 +19,6 @@ namespace ESCPOS.Utils
             return result;
         }
 
-
         public static byte[] Add(this byte[] array1, params object[] objects)
         {
             foreach (var obj in objects)
@@ -51,5 +50,8 @@ namespace ESCPOS.Utils
 
         public static byte[] ToBytes(this string source)
             => Encoding.UTF8.GetBytes(source);
+
+        public static string ToUTF8(this byte[] array)
+            => Encoding.UTF8.GetString(array);
     }
 }
