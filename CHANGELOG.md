@@ -1,8 +1,9 @@
 # v1.2.2
-- Fixed SourceLink
+- Fixed SourceLink.
+- Added new unit tests for extension method `Add`.
 
 # v1.2.1
-- Enabled SourceLink
+- Enabled SourceLink.
 
 # v1.2.0
 - New Utility overload for extension method `Add`, accepting string parameters instead of byte arrays. This will prevent a lot of `.ToBytes()` in the code.
@@ -19,7 +20,7 @@
 - Moved all enums to `Enums.cs`.
 
 # v1.0.3
-- No relevant changed
+- No relevant changed.
 - `AssemblyVersion` was corrected.
 
 # v1.0.2
