@@ -61,14 +61,16 @@ This example will assume that the variable `cfe` is a deserialized object from t
 Also this example will print a 32 columns receipt, which is ideal for 56mm paper roll.
 ```cs
 var line = "--------------------------------";
-byte[] array = null;
-array = array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center));
+
+byte[] array = LF;
+array = array.Add(SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center));
+
 if (cfe.infCFe.emit.xFant != null)
     array.Add(cfe.infCFe.emit.xFant);
 
 array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Normal), cfe.infCFe.emit.xNome,
           LF, $"{cfe.infCFe.emit.enderEmit.xLgr},{cfe.infCFe.emit.enderEmit.nro} {cfe.infCFe.emit.enderEmit.xBairro} - {cfe.infCFe.emit.enderEmit.xMun} {cfe.infCFe.emit.enderEmit.CEP}",
-          LF, $"CNPJ: {cfe.infCFe.emit.CNPJ}".,
+          LF, $"CNPJ: {cfe.infCFe.emit.CNPJ}",
           LF, $"IE: {cfe.infCFe.emit.IE}",
           LF, line, SelectCharSizeHeight(CharSizeHeight.Double), $"Extrato No. {cfe.infCFe.ide.nCFe}",
           LF, "CUPOM FISCAL ELETRONICO - SAT", SelectCharSizeHeight(CharSizeHeight.Normal),
@@ -95,6 +97,7 @@ foreach (var det in cfe.infCFe.det)
 }
 
 array.Add(LF);
+
 if (cfe.infCFe.total.ICMSTot.vDesc > 0)
     array.Add($" Desconto R${cfe.infCFe.total.ICMSTot.vDesc.ToString("f2").PadLeft(19)}", LF);
 
