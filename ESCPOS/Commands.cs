@@ -1,8 +1,8 @@
 ﻿using ESCPOS.Utils;
 using System;
 using System.IO;
-using System.Text;
 using System.Net.Sockets;
+using System.Text;
 
 namespace ESCPOS
 {
@@ -233,7 +233,7 @@ namespace ESCPOS
                 string host = splittedAddress[0];
                 string port = splittedAddress[1];
                 if (!int.TryParse(port, out var portNumber))
-                    throw new ArgumentException($"Print address format should be {{host}}:{{porta}}, but instead it is {host}:{portNumber}");
+                    throw new ArgumentException($"Print address format should be {{host}}:{{port}}, but instead it is {host}:{portNumber}");
 
                 using (Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
