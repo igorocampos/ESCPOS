@@ -1,8 +1,8 @@
-using System;
-using System.IO;
 using ESCPOS;
 using ESCPOS.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 using static ESCPOS.Commands;
 using static ESCPOSTest.StringDiffHelper;
 
