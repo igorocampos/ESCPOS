@@ -2,7 +2,7 @@
 [![Build Status](https://dev.azure.com/igorocampos/PersonalProjects/_apis/build/status/igorocampos.ESCPOS?branchName=master)](https://dev.azure.com/igorocampos/PersonalProjects/_build?definitionId=1&_a=summary)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/igorocampos/ESCPOS)](#)
 [![NuGet](https://buildstats.info/nuget/ESCPOS)](http://www.nuget.org/packages/ESCPOS)
-[![GitHub](https://img.shields.io/github/license/igorocampos/ESCPOS)](ESCPOS/LICENSE)
+[![GitHub](https://img.shields.io/badge/license-MIT-green)](ESCPOS/LICENSE)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Figorocampos%2FESCPOS?ref=badge_shield)
 
 # ESCPOS
