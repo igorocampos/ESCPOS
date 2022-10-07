@@ -1,0 +1,10 @@
+version: '3'
+services:
+  escpos:
+    image: escpos
+    container_name: escpos_compose
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /output:/app/ESCPOS/bin/Debug/netstandard2.0/
