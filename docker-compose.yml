@@ -8,3 +8,4 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /output:/app/ESCPOS/bin/Debug/netstandard2.0/
+      
