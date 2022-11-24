@@ -1,6 +1,6 @@
 # v1.2.3
-- Added new optional parameter for Barcode commend (see [#26] https://github.com/igorocampos/ESCPOS/issues/26).
-- Added support for Github Codespaces
+- Added new optional parameter for Barcode command (see [#26](https://github.com/igorocampos/ESCPOS/issues/26)).
+- Added support for GitHub Codespaces
 - Added Dockerfile and docker-compose to the project
 - Updated to .NET 6
 
