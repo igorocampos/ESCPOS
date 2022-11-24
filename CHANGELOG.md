@@ -1,3 +1,9 @@
+# v1.2.3
+- Added new optional parameter for Barcode commend (see [#26] https://github.com/igorocampos/ESCPOS/issues/26).
+- Added support for Github Codespaces
+- Added Dockerfile and docker-compose to the project
+- Updated to .NET 6
+
 # v1.2.2
 - Fixed SourceLink.
 - Added new unit tests for extension method `Add`.
