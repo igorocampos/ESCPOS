@@ -182,9 +182,10 @@ namespace ESCPOS
         /// GS k m n
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="barCode"/> is <see langword="null"/>.</exception>
-        public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162)
+        public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
         {
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
+            var width = new byte[] { 0x1D, 0x77, (byte)barcodeWidth };
             var length = barCode.Length;
             var bar = Encoding.UTF8.GetBytes(barCode);
             if (barCodeType == BarCodeType.CODE128)
@@ -194,7 +195,7 @@ namespace ESCPOS
             }
             var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)length };
 
-            return height.Add(settings, bar);
+            return height.Add(width, settings, bar);
         }
 
         /// <summary>
