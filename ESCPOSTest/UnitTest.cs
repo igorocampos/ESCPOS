@@ -84,28 +84,28 @@ namespace ESCPOSTest
         public void Barcode_EAN8()
         {
             PrintBarCode(BarCodeType.EAN8, "90311017", 52).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001DkD\u000890311017");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001dw\u0003\u001DkD\u000890311017");
         }
 
         [TestMethod]
         public void Barcode_EAN13()
         {
             PrintBarCode(BarCodeType.EAN13, "9780201379624", 52).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001DkC\r9780201379624");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001dw\u0003\u001DkC\r9780201379624");
         }
 
         [TestMethod]
         public void Barcode_CODE128()
         {
             PrintBarCode(BarCodeType.CODE128, "ABC1234", 52).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001DkI\u0009{BABC1234");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001dw\u0003\u001DkI\u0009{BABC1234");
         }
 
         [TestMethod]
         public void Barcode_UPC_A()
         {
             PrintBarCode(BarCodeType.UPC_A, "72527273070", 52).Print(TEST_FILE);
-            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001DkA\u000B72527273070");
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Dh4\u001dw\u0003\u001DkA\u000B72527273070");
         }
 
         [TestMethod]

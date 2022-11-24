@@ -161,4 +161,14 @@ namespace ESCPOS
         Double = 4,
         Triple = 6
     }
+
+    public enum BarcodeWidth
+    {
+        VeryThin = 1,
+        Thin,
+        Normal,
+        Thick,
+        VeryThick,
+        Thickest
+    }
 }
