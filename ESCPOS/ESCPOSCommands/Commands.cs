@@ -6,85 +6,8 @@ using System.Text;
 
 namespace ESCPOS
 {
-    public static class Commands
+    public static partial class Commands
     {
-        #region Simple Commands
-        /// <summary>
-        /// Moves the print position to the next tab position.
-        /// </summary>
-        /// <remarks>
-        /// ·This command is ignored unless the next tab position has been set.
-        /// ·If the next horizontal tab position exceeds the printing area, the printer sets the printing position to[Printing area width + 1].
-        /// ·If this command is received when the printing position is at [printing area width +1], the printer executes print buffer-full printing of the current line and horizontal tab processing from the beginning of the next line.
-        /// ·The default setting of the horizontal tab position for the paper roll is font A (12 x 24) every 8th character(9th, 17th, 25th, … column).
-        /// </remarks>
-        public static byte[] HorizontalTab => new byte[] { 0x09 };
-
-        /// <summary>
-        /// Prints the data in the print buffer and feeds one line based on the current line spacing.
-        /// </summary>
-        /// <remarks>
-        /// ·This command sets the print position to the beginning of the line.
-        /// </remarks>
-        public static byte[] LineFeed => new byte[] { 0x0A };
-
-        /// <summary>
-        /// When automatic line feed is enabled, this command functions the same as LF, when automatic line feed is disabled, this command is ignored
-        /// </summary>
-        /// <remarks>
-        /// ·Sets the print starting position to the beginning of the line.
-        /// ·The automatic line feed is ignored.
-        /// </remarks>
-        public static byte[] CarriageReturn => new byte[] { 0x0D };
-
-        /// <summary>
-        /// Prints the data in the print buffer and returns to standard mode.
-        /// </summary>
-        /// <remarks>
-        /// ·The buffer data is deleted after being printed.
-        /// ·The printer does not execute paper cutting.
-        /// ·This command sets the print position to the beginning of the line.
-        /// ·This command is enabled only in page mode.
-        /// </remarks>
-        public static byte[] PrintAndReturnToStandardMode => new byte[] { 0x0C };
-
-        /// <summary>
-        /// In page mode, delete all the print data in the current printable area.
-        /// </summary>
-        /// <remarks>
-        /// ·This command is enabled only in page mode.
-        /// ·If data that existed in the previously specified printable area also exists in the currently specified printable area, it is deleted.
-        /// </remarks>
-        public static byte[] CancelPrint => new byte[] { 0x18 };
-
-        //Alias
-        public static byte[] HT => HorizontalTab;
-        public static byte[] LF => LineFeed;
-        public static byte[] CR => CarriageReturn;
-        public static byte[] FF => PrintAndReturnToStandardMode;
-        public static byte[] CAN => CancelPrint;
-        #endregion Simple Commands
-
-        /// <summary>
-        /// ESC @
-        /// </summary>
-        public static byte[] InitializePrinter => new byte[] { 0x1B, 0x40 };
-
-        /// <summary>
-        /// ESC p m t1 t2
-        /// </summary>
-        public static byte[] OpenDrawer => new byte[] { 0x1B, 0x70, 0x00, 0x3C, 0x78 };
-
-        /// <summary>
-        /// ESC m
-        /// </summary>
-        public static byte[] PaperCut => new byte[] { 0x1B, 0x6D };
-
-        /// <summary>
-        /// ESC i
-        /// </summary>
-        public static byte[] FullPaperCut => new byte[] { 0x1B, 0x69 };
-
         /// <summary>
         /// ESC ! n
         /// </summary>
@@ -190,12 +113,12 @@ namespace ESCPOS
         /// GS k m n
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="barcode"/> is <see langword="null"/>.</exception>
-        public static byte[] Barcode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
+        public static byte[] Barcode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal, Encoding encoding = null)
         {
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
             var width = new byte[] { 0x1D, 0x77, (byte)barcodeWidth };
             var length = barcode.Length;
-            var bar = Encoding.UTF8.GetBytes(barcode);
+            var bar = (encoding ?? Encoding.UTF8).GetBytes(barcode);
             if (barcodeType == BarCodeType.CODE128)
             {
                 length += 2;
@@ -205,6 +128,9 @@ namespace ESCPOS
 
             return height.Add(width, settings, bar);
         }
+
+        public static byte[] ToBarcode(this string barcode, BarCodeType barCodeType, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal, Encoding encoding = null)
+            => Barcode(barCodeType, barcode, heightInDots, barcodeWidth, encoding);
 
         /// <summary>
         /// GS ( k pL pH cn fn n1 n2
@@ -219,7 +145,7 @@ namespace ESCPOS
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
-        public static byte[] QRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
+        public static byte[] QRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal, Encoding encoding = null)
         {
             var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodeModel, 0x00 };
             var size = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, (byte)qrCodeSize };
@@ -228,10 +154,13 @@ namespace ESCPOS
             int pL = num % 256;
             int pH = num / 256;
             var storeData = new byte[] { 0x1D, 0x28, 0x6B, (byte)pL, (byte)pH, 0x31, 0x50, 0x30 };
-            var data = Encoding.UTF8.GetBytes(content);
+            var data = (encoding ?? Encoding.UTF8).GetBytes(content);
             var print = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30 };
             return model.Add(size, errorCorrection, storeData, data, print);
         }
+
+        public static byte[] ToQRCode(this string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal, Encoding encoding = null)
+            => QRCode(content, qrCodeModel, qrCodeCorrection, qrCodeSize, encoding);
 
 
         /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty, or in an unexpected format.</exception>
