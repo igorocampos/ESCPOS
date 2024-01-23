@@ -110,7 +110,7 @@ namespace ESCPOS
         Norway,
         DenmarkII,
         SpainII,
-        LatinAmarerica
+        LatinAmerica
     }
 
     public enum CodeTable
