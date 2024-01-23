@@ -79,7 +79,7 @@ code.ToBarcode(BarCodeType.EAN13).Print("192.168.0.100:9100");
 
 ### Formatted Text
 ```cs
-byte[] cmd = SelectCharSizeHeight(CharSizeHeight.Double).Add(SelectJustification(Justification.Center), "Fancy Title");
+byte[] cmd = AlignToCenter.Add(CharSizeDoubleHeight, "Fancy Title");
 cmd.Print("\\127.0.0.1\printer");
 ```
 
