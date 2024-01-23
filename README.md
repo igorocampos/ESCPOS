@@ -87,116 +87,118 @@ cmd.Print("\\127.0.0.1\printer");
 This example will assume that the variable `cfe` is a deserialized object from the [CFe](https://portal.fazenda.sp.gov.br/servicos/sat) XML, and will print the receipt using its fields.
 Also this example will print a 32 columns receipt, which is ideal for 56mm paper roll.
 ```cs
-var line = "--------------------------------";
+ var line = "--------------------------------";
 
-byte[] array = LF;
-array = array.Add(SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center));
+ byte[] array = LF;
+ array = array.Add(CharSizeDoubleHeight, AlignToCenter);
 
-if (cfe.infCFe.emit.xFant != null)
-    array.Add(cfe.infCFe.emit.xFant);
+ if (cfe.infCFe.emit.xFant != null)
+     array.Add(cfe.infCFe.emit.xFant);
 
-array.Add(LF, SelectCharSizeHeight(CharSizeHeight.Normal), cfe.infCFe.emit.xNome,
-          LF, $"{cfe.infCFe.emit.enderEmit.xLgr},{cfe.infCFe.emit.enderEmit.nro} {cfe.infCFe.emit.enderEmit.xBairro} - {cfe.infCFe.emit.enderEmit.xMun} {cfe.infCFe.emit.enderEmit.CEP}",
-          LF, $"CNPJ: {cfe.infCFe.emit.CNPJ}",
-          LF, $"IE: {cfe.infCFe.emit.IE}",
-          LF, line, SelectCharSizeHeight(CharSizeHeight.Double), $"Extrato No. {cfe.infCFe.ide.nCFe}",
-          LF, "CUPOM FISCAL ELETRONICO - SAT", SelectCharSizeHeight(CharSizeHeight.Normal),
-          LF, LF);
+ array.Add(LF, CharSizeReset, cfe.infCFe.emit.xNome,
+           LF, $"{cfe.infCFe.emit.enderEmit.xLgr},{cfe.infCFe.emit.enderEmit.nro} {cfe.infCFe.emit.enderEmit.xBairro} - {cfe.infCFe.emit.enderEmit.xMun} {cfe.infCFe.emit.enderEmit.CEP}",
+           LF, $"CNPJ: {cfe.infCFe.emit.CNPJ}",
+           LF, $"IE: {cfe.infCFe.emit.IE}",
+           LF, line, CharSizeDoubleHeight, $"Extrato No. {cfe.infCFe.ide.nCFe}",
+           LF, "CUPOM FISCAL ELETRONICO - SAT", CharSizeReset,
+           LF, LF);
 
-if (!string.IsNullOrEmpty(cfe.infCFe.dest?.Item))
-    array.Add(line, "CPF/CNPJ do Consumidor:", cfe.infCFe.dest.Item, LF);
+ if (!string.IsNullOrEmpty(cfe.infCFe.dest?.Item))
+     array.Add(line, "CPF/CNPJ do Consumidor:", cfe.infCFe.dest.Item, LF);
 
-array.Add(line, "#|COD|DESC|QTD|UN|VL UNIT R$|(VL TRIB R$)*|VL ITEM R$",
-          LF, line, SelectJustification(Justification.Left));
+ array.Add(line, 
+           "#|COD|DESC|QTD|UN|VL UNIT R$|(VL TRIB R$)*|VL ITEM R$", LF, 
+           line, 
+           AlignLeft);
 
-int i = 1;
-foreach (var det in cfe.infCFe.det)
-{
-    string prod = $"{det.prod.cProd} {det.prod.xProd} {det.prod.qCom:0.0##} {det.prod.uCom} X {det.prod.vUnCom:0.00#} {((det.imposto?.vItem12741 ?? 0) == 0 ? "" : $"({det.imposto.vItem12741:f2})*")}";
-    array.Add($" {i++:D3} ");
-    while (prod.Length > 20)
-    {
-        var wrap = prod.Length >= 20 ? prod.Substring(0,20) : prod;
-        array.Add(wrap), LF, "     ");
-        prod = prod.Substring(20);
-    }
-    array.Add(prod.PadRight(20), det.prod.vProd.ToString("f2").PadLeft(6), LF);
-}
+ int i = 1;
+ foreach (var det in cfe.infCFe.det)
+ {
+     string prod = $"{det.prod.cProd} {det.prod.xProd} {det.prod.qCom:0.0##} {det.prod.uCom} X {det.prod.vUnCom:0.00#} {((det.imposto?.vItem12741 ?? 0) == 0 ? "" : $"({det.imposto.vItem12741:f2})*")}";
+     array.Add($" {i++:D3} ");
+     while (prod.Length > 20)
+     {
+         var wrap = prod.Length >= 20 ? prod.Substring(0, 20) : prod;
+         array.Add(wrap), LF, "     ");
+         prod = prod.Substring(20);
+     }
+     array.Add(prod.PadRight(20), det.prod.vProd.ToString("f2").PadLeft(6), LF);
+ }
 
-array.Add(LF);
+ array.Add(LF);
 
-if (cfe.infCFe.total.ICMSTot.vDesc > 0)
-    array.Add($" Desconto R${cfe.infCFe.total.ICMSTot.vDesc.ToString("f2").PadLeft(19)}", LF);
+ if (cfe.infCFe.total.ICMSTot.vDesc > 0)
+     array.Add($" Desconto R${cfe.infCFe.total.ICMSTot.vDesc.ToString("f2").PadLeft(19)}", LF);
 
-if (cfe.infCFe.total.ICMSTot.vOutro > 0)
-    array.Add($" Acrescimo R${cfe.infCFe.total.ICMSTot.vOutro.ToString("f2").PadLeft(18)}", LF);
+ if (cfe.infCFe.total.ICMSTot.vOutro > 0)
+     array.Add($" Acrescimo R${cfe.infCFe.total.ICMSTot.vOutro.ToString("f2").PadLeft(18)}", LF);
 
-array.Add(SelectCharSizeHeight(CharSizeHeight.Double), $" TOTAL R${cfe.infCFe.total.vCFe.ToString("f2").PadLeft(22)}", LF,
-          SelectCharSizeHeight(CharSizeHeight.Normal), LF);
+ array.Add(CharSizeDoubleHeight, $" TOTAL R${cfe.infCFe.total.vCFe.ToString("f2").PadLeft(22)}", LF,
+           CharSizeReset, LF);
 
-foreach (var mp in cfe.infCFe.pgto.MP)
-{
-    string description;
-    switch (Convert.ToInt32(mp.cMP ?? "1"))
-    {
-        case 2:
-            description = "Cheque";
-            break;
-        case 3:
-            description = "Cartao de Credito";
-            break;
-        case 4:
-            description = "Cartao de Debito";
-            break;
-        case 5:
-            description = "Credito na Loja";
-            break;
-        case 10:
-            description = "Vale Alimentacao";
-            break;
-        case 11:
-            description = "Vale Refeicao";
-            break;
-        case 12:
-            description = "Vale Presente";
-            break;
-        case 13:
-            description = "Vale Combustivel";
-            break;
-        case 14:
-            description = "Duplicata Mercantil";
-            break;
-        case 90:
-            description = "Sem Pagamento";
-            break;
-        default:
-            description = "Dinheiro";
-            break;
-    }
+ foreach (var mp in cfe.infCFe.pgto.MP)
+ {
+     string description;
+     switch (Convert.ToInt32(mp.cMP ?? "1"))
+     {
+         case 2:
+             description = "Cheque";
+             break;
+         case 3:
+             description = "Cartao de Credito";
+             break;
+         case 4:
+             description = "Cartao de Debito";
+             break;
+         case 5:
+             description = "Credito na Loja";
+             break;
+         case 10:
+             description = "Vale Alimentacao";
+             break;
+         case 11:
+             description = "Vale Refeicao";
+             break;
+         case 12:
+             description = "Vale Presente";
+             break;
+         case 13:
+             description = "Vale Combustivel";
+             break;
+         case 14:
+             description = "Duplicata Mercantil";
+             break;
+         case 90:
+             description = "Sem Pagamento";
+             break;
+         default:
+             description = "Dinheiro";
+             break;
+     }
 
-    array.Add($" {description.PadRight(18)}{mp.vMP.ToString("f2").PadLeft(12)}", LF);
-}
+     array.Add($" {description.PadRight(18)}{mp.vMP.ToString("f2").PadLeft(12)}", LF);
+ }
 
-String accessKey = cfe.infCFe.Id.Substring(3, 44);
-array.Add($" Troco{cfe.infCFe.pgto.vTroco.ToString("f2").PadLeft(25)}", LF);
+ String accessKey = cfe.infCFe.Id.Substring(3, 44);
+ array.Add($" Troco{cfe.infCFe.pgto.vTroco.ToString("f2").PadLeft(25)}", LF);
 
-foreach (var obs in cfe.infCFe.infAdic.obsFisco)
-    array.Add($" {obs.xCampo}-{obs.xTexto}", LF);
+ foreach (var obs in cfe.infCFe.infAdic.obsFisco)
+     array.Add($" {obs.xCampo}-{obs.xTexto}", LF);
 
-array.Add(line, "OBSERVACOES DO CONTRIBUINTE", LF);
-foreach (var item in cfe.infCFe.infAdic.infCpl.Split(';'))
-    array.Add(item, LF);
+ array.Add(line, "OBSERVACOES DO CONTRIBUINTE", LF);
+ foreach (var item in cfe.infCFe.infAdic.infCpl.Split(';'))
+     array.Add(item, LF);
 
-array.Add(LF, line, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center), $"SAT No. {cfe.infCFe.ide.nserieSAT}",
-          LF, SelectCharSizeHeight(CharSizeHeight.Normal), DateTime.ParseExact($"{cfe.infCFe.ide.dEmi} {cfe.infCFe.ide.hEmi}", "yyyyMMdd HHmmss", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm:ss"),
-          LF, LF, SelectCharSizeHeight(CharSizeHeight.Double), accessKey,
-          LF, LF, Barcode(BarCodeType.CODE128, accessKey.Substring(0, 22), 30), Barcode(BarCodeType.CODE128, accessKey.Substring(22), 30),
-          LF, LF,
-          QRCode($"{accessKey}|{cfe.infCFe.ide.dEmi}{cfe.infCFe.ide.hEmi}|{cfe.infCFe.total.vCFe}|{cfe.infCFe.dest?.Item ?? ""}|{cfe.infCFe.ide.assinaturaQRCODE}"),
-          SelectCharSizeHeight(CharSizeHeight.Normal),
-          LF, line, LF, LF, LF);
+ array.Add(LF, line, CharSizeDoubleHeight, AlignTOCenter, $"SAT No. {cfe.infCFe.ide.nserieSAT}",
+           LF, CharSizeReset, DateTime.ParseExact($"{cfe.infCFe.ide.dEmi} {cfe.infCFe.ide.hEmi}", "yyyyMMdd HHmmss", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm:ss"),
+           LF, LF, CharSizeDoubleHeight, accessKey,
+           LF, LF, accessKey.Substring(0, 22).ToBarcode(BarCodeType.CODE128, 30), accessKey.Substring(22).ToBarcode(BarCodeType.CODE128, 30),
+           LF, LF,
+           $"{accessKey}|{cfe.infCFe.ide.dEmi}{cfe.infCFe.ide.hEmi}|{cfe.infCFe.total.vCFe}|{cfe.infCFe.dest?.Item ?? ""}|{cfe.infCFe.ide.assinaturaQRCODE}".ToQRCode(),
+           CharSizeReset,
+           LF, line, LF, LF, LF);
 
-array.Print(@"\\127.0.0.1\printer");
+ array.Print(@"\\127.0.0.1\printer");
 ```
 
 # Considerations
