@@ -1,6 +1,4 @@
-﻿using ESCPOS.Utils;
-
-namespace ESCPOS
+﻿namespace ESCPOS
 {
     public static partial class Commands
     {
