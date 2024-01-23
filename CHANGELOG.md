@@ -1,3 +1,9 @@
+# v1.2.4
+- Renamed methods PrintBarcode and PrintQRCode and marked old ones as obsolete (see #29)
+- Added support for any Encoding instead of just UTF-8
+- Added Simple Commands as alias of existing ones (see #30)
+- Created Extension Methods for Barcode and QRCode (see #31)
+
 # v1.2.3
 - Added new optional parameter for Barcode command (see [#26](https://github.com/igorocampos/ESCPOS/issues/26)).
 - Added support for GitHub Codespaces
