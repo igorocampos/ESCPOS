@@ -182,18 +182,26 @@ namespace ESCPOS
         /// GS k m n
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="barCode"/> is <see langword="null"/>.</exception>
-        public static byte[] PrintBarCode(BarCodeType barCodeType, string barCode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
+        [Obsolete(nameof(PrintBarCode) + " is deprecated, please use " + nameof(Barcode) + " method instead.")]
+        public static byte[] PrintBarCode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
+            => Barcode(barcodeType, barcode, heightInDots, barcodeWidth);
+
+        /// <summary>
+        /// GS k m n
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="barcode"/> is <see langword="null"/>.</exception>
+        public static byte[] Barcode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
         {
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
             var width = new byte[] { 0x1D, 0x77, (byte)barcodeWidth };
-            var length = barCode.Length;
-            var bar = Encoding.UTF8.GetBytes(barCode);
-            if (barCodeType == BarCodeType.CODE128)
+            var length = barcode.Length;
+            var bar = Encoding.UTF8.GetBytes(barcode);
+            if (barcodeType == BarCodeType.CODE128)
             {
                 length += 2;
                 bar = new byte[] { 0x7B, 0x42 }.Add(bar); //Subset CODE B is selected for CODE128 bars
             }
-            var settings = new byte[] { 0x1D, 0x6B, (byte)barCodeType, (byte)length };
+            var settings = new byte[] { 0x1D, 0x6B, (byte)barcodeType, (byte)length };
 
             return height.Add(width, settings, bar);
         }
@@ -202,11 +210,20 @@ namespace ESCPOS
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
-        public static byte[] PrintQRCode(string content, QRCodeModel qrCodemodel = QRCodeModel.Model1, QRCodeCorrection qrodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
+        [Obsolete(nameof(PrintQRCode) + " is deprecated, please use " + nameof(QRCode) + " method instead.")]
+        public static byte[] PrintQRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
+            => QRCode(content, qrCodeModel, qrCodeCorrection, qrCodeSize);
+
+
+        /// <summary>
+        /// GS ( k pL pH cn fn n1 n2
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
+        public static byte[] QRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
         {
-            var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodemodel, 0x00 };
+            var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodeModel, 0x00 };
             var size = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, (byte)qrCodeSize };
-            var errorCorrection = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x45, (byte)qrodeCorrection };
+            var errorCorrection = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x45, (byte)qrCodeCorrection };
             int num = content.Length + 3;
             int pL = num % 256;
             int pH = num / 256;
@@ -215,6 +232,7 @@ namespace ESCPOS
             var print = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30 };
             return model.Add(size, errorCorrection, storeData, data, print);
         }
+
 
         /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty, or in an unexpected format.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="printerAddress"/> is <see langword="null"/>.</exception>
