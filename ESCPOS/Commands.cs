@@ -213,7 +213,7 @@ namespace ESCPOS
         [Obsolete(nameof(PrintQRCode) + " is deprecated, please use " + nameof(QRCode) + " method instead.")]
         public static byte[] PrintQRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
             => QRCode(content, qrCodeModel, qrCodeCorrection, qrCodeSize);
-        
+
 
         /// <summary>
         /// GS ( k pL pH cn fn n1 n2
