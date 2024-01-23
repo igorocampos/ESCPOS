@@ -44,13 +44,13 @@ using ESCPOS.Utils;
 
 ### QRCode
 ```cs
-byte[] qrCodeCommand = PrintQRCode("Some data");
+byte[] qrCodeCommand = QRCode("Some data");
 qrCodeCommand.Print("COM2");
 ```
 
 ### Barcode
 ```cs
-byte[] barCodeCommand = PrintBarCode(BarCodeType.EAN13, "9780201379624");
+byte[] barCodeCommand = Barcode(BarCodeType.EAN13, "9780201379624");
 barCodeCommand.Print("192.168.0.100:9100");
 ```
 
@@ -167,9 +167,9 @@ foreach (var item in cfe.infCFe.infAdic.infCpl.Split(';'))
 array.Add(LF, line, SelectCharSizeHeight(CharSizeHeight.Double), SelectJustification(Justification.Center), $"SAT No. {cfe.infCFe.ide.nserieSAT}",
           LF, SelectCharSizeHeight(CharSizeHeight.Normal), DateTime.ParseExact($"{cfe.infCFe.ide.dEmi} {cfe.infCFe.ide.hEmi}", "yyyyMMdd HHmmss", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm:ss"),
           LF, LF, SelectCharSizeHeight(CharSizeHeight.Double), accessKey,
-          LF, LF, PrintBarCode(BarCodeType.CODE128, accessKey.Substring(0, 22), 30), PrintBarCode(BarCodeType.CODE128, accessKey.Substring(22), 30),
+          LF, LF, Barcode(BarCodeType.CODE128, accessKey.Substring(0, 22), 30), Barcode(BarCodeType.CODE128, accessKey.Substring(22), 30),
           LF, LF,
-          PrintQRCode($"{accessKey}|{cfe.infCFe.ide.dEmi}{cfe.infCFe.ide.hEmi}|{cfe.infCFe.total.vCFe}|{cfe.infCFe.dest?.Item ?? ""}|{cfe.infCFe.ide.assinaturaQRCODE}"),
+          QRCode($"{accessKey}|{cfe.infCFe.ide.dEmi}{cfe.infCFe.ide.hEmi}|{cfe.infCFe.total.vCFe}|{cfe.infCFe.dest?.Item ?? ""}|{cfe.infCFe.ide.assinaturaQRCODE}"),
           SelectCharSizeHeight(CharSizeHeight.Normal),
           LF, line, LF, LF, LF);
 
