@@ -31,6 +31,19 @@ namespace ESCPOS.Utils
             return array1;
         }
 
+        public static byte[] Add(this byte[] array1, Encoding encoding, params object[] objects)
+        {
+            foreach (var obj in objects)
+            {
+                if (obj is byte[] array2)
+                    array1 = array1.Add(array2);
+                else if (obj is string str)
+                    array1 = array1.Add(str.ToBytes(encoding));
+            }
+            return array1;
+        }
+
+
         public static byte[] Add(this byte[] array, params string[] strings)
         {
             StringBuilder sb = new StringBuilder();
@@ -38,6 +51,15 @@ namespace ESCPOS.Utils
                 sb.Append(str);
 
             return array.Add(sb.ToString().ToBytes());
+        }
+
+        public static byte[] Add(this byte[] array, Encoding encoding, params string[] strings)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string str in strings)
+                sb.Append(str);
+
+            return array.Add(sb.ToString().ToBytes(encoding));
         }
 
         public static byte[] Add(this byte[] array1, params byte[][] arrays)
@@ -48,8 +70,8 @@ namespace ESCPOS.Utils
             return array1;
         }
 
-        public static byte[] ToBytes(this string source)
-            => Encoding.UTF8.GetBytes(source);
+        public static byte[] ToBytes(this string source, Encoding encoding = null)
+            => (encoding ?? Encoding.UTF8).GetBytes(source);
 
         public static string ToUTF8(this byte[] array)
             => Encoding.UTF8.GetString(array);

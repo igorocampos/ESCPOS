@@ -33,6 +33,13 @@ With `ToBytes` method you can convert a UTF-8 string to a byte array:
 ```cs
 byte[] result = "Some string".ToBytes();
 ```
+
+Alternatively you can choose whatever Encoding you wish to use for that:
+```cs
+byte[] result = "汉字".ToBytes(Encoding.GetEncoding("GBK"));
+```
+*Just make sure your Printer has a corresponding CodePage for that Encoding!
+
 ## Examples
 
 All examples will assume the using statements below:
@@ -48,11 +55,27 @@ byte[] qrCodeCommand = QRCode("Some data");
 qrCodeCommand.Print("COM2");
 ```
 
+Or using the Extension Method
+
+```cs
+string data = "Some data";
+data.ToQRCode().Print("COM2");
+```
+
+
 ### Barcode
 ```cs
 byte[] barCodeCommand = Barcode(BarCodeType.EAN13, "9780201379624");
 barCodeCommand.Print("192.168.0.100:9100");
 ```
+
+Or using the Extension Method
+
+```cs
+string code = "9780201379624";
+code.ToBarcode(BarCodeType.EAN13).Print("192.168.0.100:9100");
+```
+
 
 ### Formatted Text
 ```cs
@@ -177,8 +200,6 @@ array.Print(@"\\127.0.0.1\printer");
 ```
 
 # Considerations
-This library will only accept UTF8 Encoding for Barcodes and QRCodes data.
-
 When printing CODE128 barcodes, it will use automatically subset B, which supports numbers, upper and lower case letters and some additional characters.
 
 You can see the changelog [here](CHANGELOG.md).

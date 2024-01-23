@@ -190,12 +190,12 @@ namespace ESCPOS
         /// GS k m n
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="barcode"/> is <see langword="null"/>.</exception>
-        public static byte[] Barcode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
+        public static byte[] Barcode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal, Encoding encoding = null)
         {
             var height = new byte[] { 0x1D, 0x68, (byte)heightInDots };
             var width = new byte[] { 0x1D, 0x77, (byte)barcodeWidth };
             var length = barcode.Length;
-            var bar = Encoding.UTF8.GetBytes(barcode);
+            var bar = (encoding ?? Encoding.UTF8).GetBytes(barcode);
             if (barcodeType == BarCodeType.CODE128)
             {
                 length += 2;
@@ -205,6 +205,9 @@ namespace ESCPOS
 
             return height.Add(width, settings, bar);
         }
+
+        public static byte[] ToBarcode(this string barcode, BarCodeType barCodeType, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal, Encoding encoding = null)
+            => Barcode(barCodeType, barcode, heightInDots, barcodeWidth, encoding);
 
         /// <summary>
         /// GS ( k pL pH cn fn n1 n2
@@ -219,7 +222,7 @@ namespace ESCPOS
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
-        public static byte[] QRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
+        public static byte[] QRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal, Encoding encoding = null)
         {
             var model = new byte[] { 0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, (byte)qrCodeModel, 0x00 };
             var size = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, (byte)qrCodeSize };
@@ -228,10 +231,13 @@ namespace ESCPOS
             int pL = num % 256;
             int pH = num / 256;
             var storeData = new byte[] { 0x1D, 0x28, 0x6B, (byte)pL, (byte)pH, 0x31, 0x50, 0x30 };
-            var data = Encoding.UTF8.GetBytes(content);
+            var data = (encoding ?? Encoding.UTF8).GetBytes(content);
             var print = new byte[] { 0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30 };
             return model.Add(size, errorCorrection, storeData, data, print);
         }
+
+        public static byte[] ToQRCode(this string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal, Encoding encoding = null)
+            => QRCode(content, qrCodeModel, qrCodeCorrection, qrCodeSize, encoding);
 
 
         /// <exception cref="ArgumentException"><paramref name="printerAddress"/> is empty, or in an unexpected format.</exception>
