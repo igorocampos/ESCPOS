@@ -40,6 +40,26 @@ byte[] result = "汉字".ToBytes(Encoding.GetEncoding("GBK"));
 ```
 *Just make sure your Printer has a corresponding CodePage for that Encoding!
 
+## Printer Class
+As an alternative, if you'd like to instantiate a Printer class that will handle all about bytes, encoding, and even have printer specific features like an horizontal line or print text aligned to the left AND to the right in the same line, which is only possible by knowing the number of columns your printer has, you can use the `Printer` class and its methods.
+
+```cs
+//Instantiate printer with its details for encoding, column count and address
+var printer = new Printer { Encoding = Encoding.UTF8, Columns = 32, Address = "COM4" };
+
+//Add all bytes to the Cache
+printer.AddToCache(
+    printer.HorizontalLine,
+    LF,
+    printer.SameLineLeftAndRightAlignedText("Sample Product", "$10.99"),
+    LF,
+    printer.HorizontalLine
+);
+
+//Send everything that is currently in the cache to the printer
+printer.Print();
+```
+
 ## Examples
 
 All examples will assume the using statements below:
@@ -82,8 +102,36 @@ code.ToBarcode(BarCodeType.EAN13).Print("192.168.0.100:9100");
 byte[] cmd = AlignToCenter.Add(CharSizeDoubleHeight, "Fancy Title");
 cmd.Print("\\127.0.0.1\printer");
 ```
+### Example using Printer class
+```cs
+var printer = new Printer { Encoding = Encoding.UTF8, Columns = 32, Address = "192.168.0.100:9100" };
+printer.AddToCache(
+    printer.HorizontalDoubleLine,
+    LF,
+    printer.SameLineLeftAndRightAlignedText("Product Name", "Price"),
+    LF,
+    printer.HorizontalLine,
+    LF,
+    printer.SameLineLeftAndRightAlignedText("Sample Product", "$10.99"),
+    LF,
+    printer.SameLineLeftAndRightAlignedText("Sample Product with a very long description", "$0.01"),
+    LF,
+    AlignToRight,
+    "----------",
+    LF,
+    CharSizeDoubleHeight,
+    "$11.00",
+    CharSizeReset,
+    LF,
+    "----------",
+    AlignToLeft,
+    LF,
+    printer.HorizontalDoubleLine
+);
+printer.Print();
+```
 
-### Full CFe SAT Receipt
+### Full CFe SAT Receipt without using Printer class
 This example will assume that the variable `cfe` is a deserialized object from the [CFe](https://portal.fazenda.sp.gov.br/servicos/sat) XML, and will print the receipt using its fields.
 Also this example will print a 32 columns receipt, which is ideal for 56mm paper roll.
 ```cs

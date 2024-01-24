@@ -1,6 +1,7 @@
 # v1.3.0
 - Methods PrintBarcode and PrintQRCode are obsolete and will thow error if used (see #29)
 - Updated Tests to .NET 8
+- Printer class added, so things like Column and Encoding can be set and leveraged
 
 # v1.2.4
 - Renamed methods PrintBarcode and PrintQRCode and marked old ones as obsolete (see #29)
