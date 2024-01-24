@@ -3,6 +3,7 @@ using ESCPOS.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Text;
 using static ESCPOS.Commands;
 using static ESCPOSTest.StringDiffHelper;
 
@@ -148,6 +149,75 @@ namespace ESCPOSTest
         {
             SelectJustification(Justification.Left).Add(TEXT_DATA).Print(TEST_FILE);
             ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "\u001Ba\0Data test with some special characters: $ñáãç*/&#@\"'^{}");
+        }
+
+        [TestMethod]
+        public void PrinterSameLineLeftAndRightAlignedText()
+        {
+            var printer = new Printer();
+            printer.Columns = 5;
+            byte[] result;
+
+            //Pr 99
+            result = printer.SameLineLeftAndRightAlignedText("Product", "99");
+            ShouldEqualWithDiff(result.ToUTF8(), "Pr 99\u001Ba\u0000");
+
+            //P 999
+            result = printer.SameLineLeftAndRightAlignedText("Product", "999");
+            ShouldEqualWithDiff(result.ToUTF8(), "P 999\u001Ba\u0000");
+
+            //Pro 99
+            printer.Columns = 6;
+            result = printer.SameLineLeftAndRightAlignedText("Product", "99");
+            ShouldEqualWithDiff(result.ToUTF8(), "Pro 99\u001Ba\u0000");
+
+            // 99
+            printer.Columns = 3;
+            result = printer.SameLineLeftAndRightAlignedText("Product", "99");
+            ShouldEqualWithDiff(result.ToUTF8(), "\u001Ba\u000299\u001Ba\u0000");
+
+            // 99
+            printer.Columns = 2;
+            result = printer.SameLineLeftAndRightAlignedText("Product", "99");
+            ShouldEqualWithDiff(result.ToUTF8(), "\u001Ba\u000299\u001Ba\u0000");
+
+            //Product 99
+            printer.Columns = 10;
+            result = printer.SameLineLeftAndRightAlignedText("Product", "99");
+            ShouldEqualWithDiff(result.ToUTF8(), "Product 99\u001Ba\u0000");
+
+            //Product      99
+            printer.Columns = 15;
+            result = printer.SameLineLeftAndRightAlignedText("Product", "99");
+            ShouldEqualWithDiff(result.ToUTF8(), "Product      99\u001Ba\u0000");
+
+
+            printer = new Printer { Encoding = Encoding.UTF8, Columns = 32, Address = TEST_FILE };
+            printer.AddToCache(
+                printer.HorizontalDoubleLine,
+                LF,
+                printer.SameLineLeftAndRightAlignedText("Product Name", "Price"),
+                LF,
+                printer.HorizontalLine,
+                LF,
+                printer.SameLineLeftAndRightAlignedText("Sample Product", "$10.99"),
+                LF,
+                printer.SameLineLeftAndRightAlignedText("Sample Product with a very long description", "$0.01"),
+                LF,
+                AlignToRight,
+                "----------",
+                LF,
+                CharSizeDoubleHeight,
+                "$11.00",
+                CharSizeReset,
+                LF,
+                "----------",
+                AlignToLeft,
+                LF,
+                printer.HorizontalDoubleLine
+            );
+            printer.Print();
+            ShouldEqualWithDiff(File.ReadAllText(TEST_FILE), "================================\nProduct Name               Price\u001ba\u0000\n--------------------------------\nSample Product            $10.99\u001ba\u0000\nSample Product with a very $0.01\u001ba\u0000\n\u001ba\u0002----------\n\u001d!\u0001$11.00\u001d!\u0000\n----------\u001ba\u0000\n================================");
         }
     }
 }
