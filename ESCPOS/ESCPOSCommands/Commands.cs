@@ -105,7 +105,7 @@ namespace ESCPOS
         /// GS k m n
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="barCode"/> is <see langword="null"/>.</exception>
-        [Obsolete(nameof(PrintBarCode) + " is deprecated, please use " + nameof(Barcode) + " method instead.")]
+        [Obsolete(nameof(PrintBarCode) + " is deprecated, please use " + nameof(Barcode) + " method instead.", true)]
         public static byte[] PrintBarCode(BarCodeType barcodeType, string barcode, int heightInDots = 162, BarcodeWidth barcodeWidth = BarcodeWidth.Normal)
             => Barcode(barcodeType, barcode, heightInDots, barcodeWidth);
 
@@ -136,7 +136,7 @@ namespace ESCPOS
         /// GS ( k pL pH cn fn n1 n2
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
-        [Obsolete(nameof(PrintQRCode) + " is deprecated, please use " + nameof(QRCode) + " method instead.")]
+        [Obsolete(nameof(PrintQRCode) + " is deprecated, please use " + nameof(QRCode) + " method instead.", true)]
         public static byte[] PrintQRCode(string content, QRCodeModel qrCodeModel = QRCodeModel.Model1, QRCodeCorrection qrCodeCorrection = QRCodeCorrection.Percent7, QRCodeSize qrCodeSize = QRCodeSize.Normal)
             => QRCode(content, qrCodeModel, qrCodeCorrection, qrCodeSize);
 

@@ -1,3 +1,8 @@
+# v1.3.0
+- Methods PrintBarcode and PrintQRCode are obsolete and will thow error if used (see #29)
+- Updated Tests to .NET 8
+- Printer class added, so things like Column and Encoding can be set and leveraged
+
 # v1.2.4
 - Renamed methods PrintBarcode and PrintQRCode and marked old ones as obsolete (see #29)
 - Added support for any Encoding instead of just UTF-8
@@ -8,7 +13,7 @@
 - Added new optional parameter for Barcode command (see [#26](https://github.com/igorocampos/ESCPOS/issues/26)).
 - Added support for GitHub Codespaces
 - Added Dockerfile and docker-compose to the project
-- Updated to .NET 6
+- Updated Tests to .NET 6
 
 # v1.2.2
 - Fixed SourceLink.
